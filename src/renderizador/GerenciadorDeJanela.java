@@ -1,6 +1,8 @@
 package renderizador;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.opengl.Display;
@@ -30,6 +32,21 @@ public class GerenciadorDeJanela {
 		//Tamanho da janela
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
 		
+		//Também aqui iniciaremos o Keyboard e o Mouse do LWJGL
+		
+		try {
+			Keyboard.create();
+		} catch (LWJGLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Mouse.create();
+		} catch (LWJGLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 	//A cada passo esse metodo atualizará a janela na qual rodamos nossa engine
@@ -43,5 +60,7 @@ public class GerenciadorDeJanela {
 	public static void fecharDisplay(){
 		//Fechar display
 		Display.destroy();
+		Keyboard.destroy();
+		Mouse.destroy();
 	}
 }

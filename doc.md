@@ -76,6 +76,17 @@ Configuramos o nosso ambiente de desenvolvimento, baixamos o Slick Utils (slick.
 
 Obs:A matriz de projeção é carregada no construtor do renderizador, a matriz de Visualização é carregada antes de chamar o metodo renderizar no Main e ela é criada dentro do método que carrega ela a matriz de transformação é chamada dentro do metodo renderizar.
 
+## Importar Objetos Do Blender ##
 
+## Entrada de Teclado e Mouse ##
+**entradas**
+1.*MeuMouse* : Classe responsável em detectar ações relacionadas ao uso do mouse, como qual botão o usuário esta clicando e onde está a posição do mouse na tela. Temos também metodos para saber se o botão foi pressionado, esta sendo pressionado  ou foi solto.
+2.*MeuTeclado* : Assim como o mouse essa Classe é responsável em detectar o acionamento de teclas no Teclado.
+**estruturasDeDaDos**
+1.*Vector2f* : Classe responsável em lidar com vetores de float de duas dimensões, usadas em posicionamento 2D, como em Texturas, e Tela.
+**renderizador**
+1.*GerenciadorDeJanela* : Adicionamos a inicialização do Mouse e Teclado de LWJGL e seu destroy().
+**executador**
+1.*Main* : Colocamos uns SYSout só para testar o mouse e o teclado.
 
 

@@ -1,10 +1,14 @@
 package executador;
 
+
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
 import entidades.Camera;
 import entidades.Entidade;
+import entradas.MeuMouse;
+import entradas.MeuTeclado;
 import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
@@ -46,6 +50,17 @@ public class Main {
 
 			renderizador.renderizar(entidade,shader);
 			shader.fecharPrograma();
+			MeuTeclado.tick();
+			MeuMouse.tick();
+			
+			if(MeuTeclado.foiPressionada(Keyboard.KEY_UP))
+				System.out.println("seta apertada");
+			if(MeuTeclado.foiSolta(Keyboard.KEY_UP))
+				System.out.println("seta solta");
+			if(MeuMouse.foiPressionado(0))
+				System.out.println("botao apertado hein" + MeuMouse.getMousePos().toString());
+			if(MeuMouse.foiSolto(0))
+				System.out.println("botao solto");
 			
 			GerenciadorDeJanela.atualizarDisplay();
 		}		//Aqui somente será alcançado se fizermos uma requisição de fechar a janela
