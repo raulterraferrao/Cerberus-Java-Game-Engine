@@ -1,0 +1,15 @@
+#version 330 core
+
+in vec2 vertexTextura;
+out vec4 cor_saida;
+
+//O textureSample recebe a textura que ativamos no glActiveTexture e demos bind no glBindTexture na classe
+// Renderizador no método renderizar.
+uniform sampler2D texturaSample;
+void main(void){
+
+	//texture essa é uma função que pega a textura que passamos e combina com os pixels do nosso objeto e retorna 
+	//a cor de cada pixel no cor_saida, podemos dar strech na textura se colocarmos os vertices como 0.5 ao inves de 1. 
+	cor_saida = texture(texturaSample,vertexTextura);
+
+}

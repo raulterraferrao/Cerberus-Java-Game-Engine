@@ -1,0 +1,19 @@
+#version 330 core
+
+in vec3 pos;
+in vec2 coordenadasDaTextura;
+out vec2 vertexTextura;
+
+uniform mat4 matrizDeTransformacao;
+uniform mat4 matrizDeProjecao;
+uniform mat4 matrizDeVisualizacao;
+
+void main(void){
+	
+	//Onde renderizar os vertices na tela
+	gl_Position = matrizDeProjecao * matrizDeVisualizacao * matrizDeTransformacao * vec4(pos,1.0);
+	//O vertexshader não pode lidar com a textura já que ele lida somente com os vertices e não com o que está entre os vertices.
+	vertexTextura = coordenadasDaTextura;
+	
+
+}
