@@ -3,7 +3,7 @@ package entradas;
 import java.util.ArrayList;
 import org.lwjgl.input.Mouse;
 
-import estruturasDeDados.Vector2f;
+import estruturasDeDados.Vetor2f;
 
 public class MeuMouse {
 	
@@ -50,8 +50,8 @@ public class MeuMouse {
 		return botoesSoltos.contains(botao);
 	}
 	
-	public static Vector2f getMousePos(){
+	public static Vetor2f getMousePos(){
 		
-		return new Vector2f(Mouse.getX(), Mouse.getY());
+		return new Vetor2f(Mouse.getX(), Mouse.getY());
 	}
 }

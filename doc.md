@@ -89,4 +89,13 @@ Obs:A matriz de projeção é carregada no construtor do renderizador, a matriz 
 **executador**
 1.*Main* : Colocamos uns SYSout só para testar o mouse e o teclado.
 
+## Criação Das Estruturas De Dados que Usaremos em Nossa Engine ##
+
+**estruturasDeDaDos**
+1.*Vetor2f* : Classe responsável em lidar com vetores de float de duas dimensões, usadas em posicionamento 2D, como em Texturas, e Tela.
+2.*Vetor3f* : Classe responsável em lidar com vetores de float de duas dimensões, usadas em posicionamento 3D, como posicionamento.
+3.*Matriz4f* : Classe responsável em lidar com matrizes de transformação, utilizada para escalar,rotacionar e transladar um objeto, podendo tbm ser utilizada como movimentação de camera e matriz de projeção.
+4.*Quaternio* : Quaternio é responsável em rotacionar um vetor ... muito complexo ainda, não sei definir muito bem o seu uso.
+
+
 
