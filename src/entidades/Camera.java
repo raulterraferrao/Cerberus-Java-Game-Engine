@@ -1,11 +1,12 @@
 package entidades;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector3f;
+
+import estruturasDeDados.Vetor3f;
 
 public class Camera {
 
-	Vector3f posicao = new Vector3f(0,0,1);
+	Vetor3f posicao = new Vetor3f(0,0,1);
 	float pitch;
 	float yaw = 0;
 	float roll;
@@ -35,7 +36,7 @@ public class Camera {
 		}
 	}
 	
-	public Vector3f getPosicao() {
+	public Vetor3f getPosicao() {
 		return posicao;
 	}
 	public float getPitch() {

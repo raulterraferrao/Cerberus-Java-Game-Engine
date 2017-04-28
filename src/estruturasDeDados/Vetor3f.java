@@ -1,9 +1,9 @@
 package estruturasDeDados;
 
 public class Vetor3f {
-	private float x;
-	private float y;
-	private float z;
+	public float x;
+	public float y;
+	public float z;
 	
 	public Vetor3f(float x, float y, float z) {
 		
@@ -17,14 +17,14 @@ public class Vetor3f {
 	}
 	
 	public float produtoEscalar(Vetor3f vetor){
-		return vetor.getX() * x + vetor.getY() * y + vetor.getZ() * z;
+		return vetor.x * x + vetor.y * y + vetor.z * z;
 	}
 	
 	public Vetor3f produtoVetorial(Vetor3f vetor){
 		
-		float x_ = y * vetor.getZ() - z * vetor.getY();
-		float y_ = z * vetor.getX() - x * vetor.getZ();
-		float z_ = x * vetor.getY() - y * vetor.getX();
+		float x_ = y * vetor.z - z * vetor.y;
+		float y_ = z * vetor.x - x * vetor.z;
+		float z_ = x * vetor.y - y * vetor.x;
 		
 		return new Vetor3f(x_, y_ , z_);
 	}
@@ -52,7 +52,7 @@ public class Vetor3f {
 	}
 	
 	public Vetor3f somar(Vetor3f vetor){
-		return new Vetor3f(x + vetor.getX(), y + vetor.getY(), z + vetor.getZ());
+		return new Vetor3f(x + vetor.x, y + vetor.y, z + vetor.z);
 	}
 	
 	public Vetor3f somar(float valor){
@@ -60,7 +60,7 @@ public class Vetor3f {
 	}
 	
 	public Vetor3f subtrair(Vetor3f vetor){
-		return new Vetor3f(x - vetor.getX(), y - vetor.getY(), z - vetor.getZ());
+		return new Vetor3f(x - vetor.x, y - vetor.y, z - vetor.z);
 	}
 	
 	public Vetor3f subtrair(float valor){
@@ -68,7 +68,7 @@ public class Vetor3f {
 	}
 	
 	public Vetor3f multiplicar(Vetor3f vetor){
-		return new Vetor3f(x * vetor.getX(), y * vetor.getY(), z * vetor.getZ());
+		return new Vetor3f(x * vetor.x, y * vetor.y, z * vetor.z);
 	}
 	
 	public Vetor3f multiplicar(float valor){
@@ -76,9 +76,9 @@ public class Vetor3f {
 	}
 	
 	public Vetor3f dividir(Vetor3f vetor){
-		if((vetor.getX() == 0) || (vetor.getY() == 0) || (vetor.getZ() == 0))
+		if((vetor.x == 0) || (vetor.y == 0) || (vetor.z == 0))
 			return this;
-		return new Vetor3f(x / vetor.getX(),y / vetor.getY(), z / vetor.getZ());
+		return new Vetor3f(x / vetor.x,y / vetor.y, z / vetor.z);
 	}
 	
 	public Vetor3f dividir(float valor){
@@ -93,29 +93,4 @@ public class Vetor3f {
 	public String toString(){
 		return "(" + x + " " + y + " " + z + ")";
 	}
-
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getZ() {
-		return z;
-	}
-
-	public void setZ(float z) {
-		this.z = z;
-	}
-
 }

@@ -1,9 +1,12 @@
 package shaders;
 
-import org.lwjgl.util.vector.Matrix4f;
 
 import entidades.Camera;
-import ferramentas.Matematica;
+import entidades.Entidade;
+import estruturasDeDados.Matriz4f;
+import matrizesDeTransformacao.MatrizDeProjecao;
+import matrizesDeTransformacao.MatrizDeTransformacao;
+import matrizesDeTransformacao.MatrizDeVisualizacao;
 
 public class StaticShader extends ProgramaShaderPadrao {
 
@@ -35,15 +38,22 @@ public class StaticShader extends ProgramaShaderPadrao {
 		
 	}
 	
-	public void carregarMatrizDeTransformacao(Matrix4f matriz){
-		super.carregarMatriz4f(localidade_MatrizDeTransformacao, matriz);
+	public void carregarMatrizDeTransformacao(Entidade entidade){
+		
+		Matriz4f transformacao = MatrizDeTransformacao.criarMatrizDeTransformacao(entidade.getPosicao(),
+				entidade.getRotx(), entidade.getRoty(), entidade.getRotz(), entidade.getEscala());
+		
+		super.carregarMatriz4f(localidade_MatrizDeTransformacao, transformacao);
 	}
 	
-	public void carregarMatrizDeProjecao(Matrix4f projecao){
+	public void carregarMatrizDeProjecao(){
+		MatrizDeProjecao.criarMatrizDeProjecao();
+		Matriz4f projecao = new Matriz4f();
+		projecao = MatrizDeProjecao.getMatrizDeProjecao();
 		super.carregarMatriz4f(localidade_MatrizDeProjecao, projecao);
 	}
 	public void carregarMatrizDeVisualizacao(Camera camera){
-		Matrix4f visualizacao = Matematica.criarMatrizDeVisualizacao(camera);
+		Matriz4f visualizacao = MatrizDeVisualizacao.criarMatrizDeVisualizacao(camera);
 		super.carregarMatriz4f(localidade_MatrizDeVisualizacao, visualizacao);
 	}
 

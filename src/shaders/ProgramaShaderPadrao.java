@@ -9,8 +9,9 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+
+import estruturasDeDados.Matriz4f;
+import estruturasDeDados.Vetor3f;
 /***
  * Essa � uma classe abstrata que retrata o que todo Shader precisa ter
  * 
@@ -107,7 +108,7 @@ public abstract class ProgramaShaderPadrao {
 	protected void carregarFloat(int localidade,float valor){
 		GL20.glUniform1f(localidade, valor);
 	}
-	protected void carregarVetor3f(int localidade,Vector3f vetor){
+	protected void carregarVetor3f(int localidade,Vetor3f vetor){
 		GL20.glUniform3f(localidade, vetor.x, vetor.y, vetor.z);
 	}
 	protected void carregarBooleano(int localidade,boolean bool){
@@ -117,8 +118,8 @@ public abstract class ProgramaShaderPadrao {
 		}
 		GL20.glUniform1f(localidade, valor);
 	}
-	protected void carregarMatriz4f(int localidade,Matrix4f matriz){
-		matriz.store(matriz4fBuffer);
+	protected void carregarMatriz4f(int localidade,Matriz4f matriz){
+		matriz.bufferizar(matriz4fBuffer);
 		matriz4fBuffer.flip();
 		GL20.glUniformMatrix4(localidade, false, matriz4fBuffer);
 	}

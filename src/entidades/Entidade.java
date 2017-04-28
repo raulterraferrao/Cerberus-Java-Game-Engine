@@ -1,13 +1,14 @@
 package entidades;
 
-import org.lwjgl.util.vector.Vector3f;
 
+
+import estruturasDeDados.Vetor3f;
 import objetos.ObjetoComTextura;
 
 public class Entidade {
 
 	private ObjetoComTextura objetoComTextura;
-	private Vector3f posicao;
+	private Vetor3f posicao;
 	private float rotx,roty,rotz;
 	private float escala;
 	/***
@@ -19,7 +20,7 @@ public class Entidade {
 	 * @param rotz
 	 * @param escala
 	 */
-	public Entidade(ObjetoComTextura objetoComTextura, Vector3f posicao, float rotx, float roty, float rotz, float escala) {
+	public Entidade(ObjetoComTextura objetoComTextura, Vetor3f posicao, float rotx, float roty, float rotz, float escala) {
 		this.objetoComTextura = objetoComTextura;
 		this.posicao = posicao;
 		this.rotx = rotx;
@@ -47,10 +48,10 @@ public class Entidade {
 	public void setObjeto(ObjetoComTextura objetoComTextura) {
 		this.objetoComTextura = objetoComTextura;
 	}
-	public Vector3f getPosicao() {
+	public Vetor3f getPosicao() {
 		return posicao;
 	}
-	public void setPosicao(Vector3f posicao) {
+	public void setPosicao(Vetor3f posicao) {
 		this.posicao = posicao;
 	}
 	public float getRotx() {

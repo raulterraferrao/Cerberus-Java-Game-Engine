@@ -2,8 +2,8 @@ package estruturasDeDados;
 
 public class Vetor2f {
 
-	private float x;
-	private float y;
+	public float x;
+	public float y;
 	
 	public Vetor2f(float x, float y) {
 		
@@ -16,7 +16,7 @@ public class Vetor2f {
 	}
 	
 	public float produtoEscalar(Vetor2f vetor){
-		return vetor.getX() * x + vetor.getY() * y;
+		return vetor.x * x + vetor.y * y;
 	}
 	
 	public Vetor2f normalizar(){
@@ -41,7 +41,7 @@ public class Vetor2f {
 	}
 	
 	public Vetor2f somar(Vetor2f vetor){
-		return new Vetor2f(x + vetor.getX(), y + vetor.getY());
+		return new Vetor2f(x + vetor.x, y + vetor.y);
 	}
 	
 	public Vetor2f somar(float valor){
@@ -49,7 +49,7 @@ public class Vetor2f {
 	}
 	
 	public Vetor2f subtrair(Vetor2f vetor){
-		return new Vetor2f(x - vetor.getX(),y - vetor.getY());
+		return new Vetor2f(x - vetor.x,y - vetor.y);
 	}
 	
 	public Vetor2f subtrair(float valor){
@@ -57,7 +57,7 @@ public class Vetor2f {
 	}
 	
 	public Vetor2f multiplicar(Vetor2f vetor){
-		return new Vetor2f(x * vetor.getX(), y * vetor.getY());
+		return new Vetor2f(x * vetor.x, y * vetor.y);
 	}
 	
 	public Vetor2f multiplicar(float valor){
@@ -65,9 +65,9 @@ public class Vetor2f {
 	}
 	
 	public Vetor2f dividir(Vetor2f vetor){
-		if((vetor.getX() == 0) || (vetor.getY() == 0))
+		if((vetor.x == 0) || (vetor.y == 0))
 			return this;
-		return new Vetor2f(x / vetor.getX(),y / vetor.getY());
+		return new Vetor2f(x / vetor.x,y / vetor.y);
 	}
 	
 	public Vetor2f dividir(float valor){
@@ -76,27 +76,8 @@ public class Vetor2f {
 		return new Vetor2f(x / valor, y / valor);
 	}
 	
-	
-	
-	
 	public String toString(){
 		return "(" + x + " " + y + ")";
-	}
-
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
 	}
 
 }

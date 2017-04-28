@@ -54,10 +54,10 @@ public class Quaternio {
 	
 	public Quaternio multiplicar(Vetor3f v){
 		
-		float w_ = - x * v.getX() - y * v.getY() - z * v.getZ();
-		float x_ =   w * v.getX() + y * v.getZ() - z * v.getY(); 
-		float y_ =   w * v.getY() + z * v.getX() - x * v.getZ();
-		float z_ =   w * v.getZ() + x * v.getY() - y * v.getX(); 
+		float w_ = - x * v.x - y * v.y - z * v.z;
+		float x_ =   w * v.x + y * v.z - z * v.y; 
+		float y_ =   w * v.y + z * v.x - x * v.z;
+		float z_ =   w * v.z + x * v.y - y * v.x; 
 		
 		return new Quaternio(x_, y_, z_, w_);
 	}

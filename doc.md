@@ -97,5 +97,9 @@ Obs:A matriz de projeção é carregada no construtor do renderizador, a matriz 
 3.*Matriz4f* : Classe responsável em lidar com matrizes de transformação, utilizada para escalar,rotacionar e transladar um objeto, podendo tbm ser utilizada como movimentação de camera e matriz de projeção.
 4.*Quaternio* : Quaternio é responsável em rotacionar um vetor ... muito complexo ainda, não sei definir muito bem o seu uso.
 
+## Modificações necessárias para introduzir as estruturas de dados ##
+
+Nessa atualização destruimos o package **matematica** e criamos um novo chamado **matrizesDeTransformacao** , nele está contido as matrizes de transformação, projeção e visualização. Agora também, não estou mais utilizando a biblioteca Vector nem a matrix4f da LWJGL. Estamos utilizando as nossas que criamos anteriormente.
+
 
 

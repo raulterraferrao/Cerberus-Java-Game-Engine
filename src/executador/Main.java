@@ -3,12 +3,11 @@ package executador;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Vector3f;
-
 import entidades.Camera;
 import entidades.Entidade;
 import entradas.MeuMouse;
 import entradas.MeuTeclado;
+import estruturasDeDados.Vetor3f;
 import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
@@ -34,7 +33,7 @@ public class Main {
 		ModeloDeTextura textura = new ModeloDeTextura(gerenciadorDeobj.carregarTextura("stallTexture"));
 		ObjetoComTextura objTextura = new ObjetoComTextura(obj,textura); 
 		
-		Entidade entidade = new Entidade(objTextura,new Vector3f(0,0,-50),0,0,0,1);
+		Entidade entidade = new Entidade(objTextura,new Vetor3f(0,0,-50),0,0,0,1);
 		Camera camera = new Camera();
 		
 		
