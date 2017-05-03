@@ -101,5 +101,19 @@ Obs:A matriz de projeção é carregada no construtor do renderizador, a matriz 
 
 Nessa atualização destruimos o package **matematica** e criamos um novo chamado **matrizesDeTransformacao** , nele está contido as matrizes de transformação, projeção e visualização. Agora também, não estou mais utilizando a biblioteca Vector nem a matrix4f da LWJGL. Estamos utilizando as nossas que criamos anteriormente.
 
+## Luminosidade ##
+
+**luminosidade**
+1.*Luminosidade* : Classe responsável em criar um objeto do tipo Luminosidade que contém um vetor3f de posicao e outro de cor.
+**objetos**
+1.*CarregarObjeto* : No return do construtor colocamos as normais gerenciador.carregarParaVAO(vetorDeVertices, vetorDeTexturas,vetorDeNormais, vetorDeIndices);
+**renderizador**
+1.*GerenciadorDeObjetos* : Foi adicionado float[] normal no carregarParaVAO e carregada do VBO para o VAO
+2.*Renderizador* : Aqui damos Enable no VAO da posição da Normal que é o 3 e depois de usa-lo damos desable.
+**shaders**
+1.*StaticShader* : Criamos variaves de localidade para a posicao da luz e sua cor que usaremos como uniform dentro do vertexshader e fragmentshader. Conectamos o in normais com o VAO 3 (NORMAL)
+2.*vertexShader* : Criamos a variaves pos_mundo no qual diz em que posição real o objeto está após ter sido feito a transformação e criamos duas variaves de saida para o fragmentshader que é a normalDaSuperficie e o vetorPraLuz.
+3.*fragmentShader* : Recebemos as normais da superficie o vetor da luz e os normalizamos para que quando fizermos o produto (dot) o tamanho não afete o resultado. Após fazer o dot nós limitamos para ser >=0 e damos como saida a cor da textura * vec4(cor_brilho)
+
 
 

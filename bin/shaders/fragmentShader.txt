@@ -1,15 +1,34 @@
 #version 330 core
 
-in vec2 vertexTextura;
+in vec2 vetorTextura;
+in vec3 normalDaSuperficie;
+in vec3 vetorParaLuz;
+
+
 out vec4 cor_saida;
 
 //O textureSample recebe a textura que ativamos no glActiveTexture e demos bind no glBindTexture na classe
 // Renderizador no método renderizar.
+
 uniform sampler2D texturaSample;
+uniform vec3 corDaLuz;
+
 void main(void){
+
+	vec3 normalDaSuperficieNormalizada = normalize(normalDaSuperficie);
+	vec3 vetorParaLuzNormalizada = normalize(vetorParaLuz);
+	
+	//Angulatura acima de 90 graus faz o brilho ser negativo 
+	float brilho = dot(normalDaSuperficieNormalizada,vetorParaLuzNormalizada);
+	float intensidade = max(brilho,0);
+	
+	vec3 cor_brilho = intensidade * corDaLuz;
+	
+
 
 	//texture essa é uma função que pega a textura que passamos e combina com os pixels do nosso objeto e retorna 
 	//a cor de cada pixel no cor_saida, podemos dar strech na textura se colocarmos os vertices como 0.5 ao inves de 1. 
-	cor_saida = texture(texturaSample,vertexTextura);
+
+	cor_saida = vec4(cor_brilho,1.0) * texture(texturaSample,vetorTextura);
 
 }

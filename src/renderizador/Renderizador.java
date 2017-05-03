@@ -11,6 +11,12 @@ import objetos.ObjetoComTextura;
 import shaders.StaticShader;
 
 public class Renderizador {
+	
+	private static final int UNBIND = 0;
+	
+	private static final int POSICAO = 0;
+	private static final int TEXTURA = 1;
+	private static final int NORMAL = 2;
 	    
 	public Renderizador(StaticShader shader){
 		shader.iniciarPrograma();
@@ -39,8 +45,10 @@ public class Renderizador {
 		// Como vamos mexer no VAO devemos usar o Bind
 		GL30.glBindVertexArray(objComum.getVaoID());
 		// Nós ativamos a posição 0 do VAO onde contém os dados do VBO
-		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
+		GL20.glEnableVertexAttribArray(POSICAO);
+		GL20.glEnableVertexAttribArray(TEXTURA);
+		GL20.glEnableVertexAttribArray(NORMAL);
+		
 		
 		//Toda entidade tem sua matriz de transformação na qual terá a sua posição,rotação e escala.
 		
@@ -53,9 +61,10 @@ public class Renderizador {
 		GL11.glDrawElements(GL11.GL_TRIANGLES, objComum.getQtdVetices(), GL11.GL_UNSIGNED_INT, 0);
 		// Desativamos a posição 0 do VAO onde contém os dados do VBO pois
 		// paramos de mexer
-		GL20.glDisableVertexAttribArray(0);
-		GL20.glDisableVertexAttribArray(1);
+		GL20.glDisableVertexAttribArray(POSICAO);
+		GL20.glDisableVertexAttribArray(TEXTURA);
+		GL20.glDisableVertexAttribArray(NORMAL);
 		// Terminamos de usar o VAO logo devemos dar unbind nele
-		GL30.glBindVertexArray(0);
+		GL30.glBindVertexArray(UNBIND);
 	}
 }

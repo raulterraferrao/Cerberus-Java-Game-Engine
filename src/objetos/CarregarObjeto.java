@@ -111,7 +111,7 @@ public class CarregarObjeto {
 				vetorDeIndices[i] = indices.get(i);
 			}
 			
-			return gerenciador.carregarParaVAO(vetorDeVertices, vetorDeTexturas, vetorDeIndices);
+			return gerenciador.carregarParaVAO(vetorDeVertices, vetorDeTexturas,vetorDeNormais, vetorDeIndices);
 	}
 	
 	

@@ -20,16 +20,23 @@ import objetos.Objeto;
 
 public class GerenciadorDeObjetos {
 
+	private static final int POSICAO = 0;
+	private static final int TEXTURA = 1;
+	private static final int NORMAL = 2;
+	
 	private List<Integer> vaos = new ArrayList<Integer>();
 	private List<Integer> vbos = new ArrayList<Integer>();
 	private List<Integer> texturas = new ArrayList<Integer>();
 	
-		public Objeto carregarParaVAO(float[] vertices,float[] coordenadasTextura,int[] indices){
+	
+	
+		public Objeto carregarParaVAO(float[] vertices, float[] coordenadasTextura, float[] normais, int[] indices){
 					
 			int vaoID = criarVAO();
 			carregarBufferDeIndices(indices);
-			carregarVBOParaVAO(0,3, vertices);
-			carregarVBOParaVAO(1,2, coordenadasTextura);
+			carregarVBOParaVAO(POSICAO,3, vertices);
+			carregarVBOParaVAO(TEXTURA,2, coordenadasTextura);
+			carregarVBOParaVAO(NORMAL,3, normais);
 			unbindVAO();
 			
 			return new Objeto(vaoID,indices.length);

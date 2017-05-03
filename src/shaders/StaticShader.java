@@ -4,6 +4,7 @@ package shaders;
 import entidades.Camera;
 import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
+import luminosidades.Luminosidade;
 import matrizesDeTransformacao.MatrizDeProjecao;
 import matrizesDeTransformacao.MatrizDeTransformacao;
 import matrizesDeTransformacao.MatrizDeVisualizacao;
@@ -13,9 +14,15 @@ public class StaticShader extends ProgramaShaderPadrao {
 	private static final String ARQUIVO_VERTEX = "src/shaders/vertexShader.txt";
 	private static final String ARQUIVO_FRAGMENT = "src/shaders/fragmentShader.txt";
 	
+	private static final int POSICAO = 0;
+	private static final int TEXTURA = 1;
+	private static final int NORMAL = 2;
+	
 	private int localidade_MatrizDeTransformacao;
 	private int localidade_MatrizDeProjecao;
 	private int localidade_MatrizDeVisualizacao;
+	private int localidade_PosicaoDaLuz;
+	private int localidade_CorDaLuz;
 	
 	public StaticShader() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -26,8 +33,9 @@ public class StaticShader extends ProgramaShaderPadrao {
 	protected void conectarAtributos() {
 		//Conecta o atributo de id x do VAO no shader com o nome passado como parametro
 		//e o tem que ter o mesmo nome do 'in' do vertexShader
-		super.conectarAtributo(0,"pos");
-		super.conectarAtributo(1, "coordenadasDaTextura");
+		super.conectarAtributo(POSICAO,"pos");
+		super.conectarAtributo(TEXTURA, "coordenadasDaTextura");
+		super.conectarAtributo(NORMAL, "normais");
 	}
 
 	@Override
@@ -35,6 +43,8 @@ public class StaticShader extends ProgramaShaderPadrao {
 		localidade_MatrizDeTransformacao = super.getLocalidadeUniform("matrizDeTransformacao");
 		localidade_MatrizDeProjecao = super.getLocalidadeUniform("matrizDeProjecao");
 		localidade_MatrizDeVisualizacao = super.getLocalidadeUniform("matrizDeVisualizacao");
+		localidade_PosicaoDaLuz = super.getLocalidadeUniform("posicaoDaLuz");
+		localidade_CorDaLuz = super.getLocalidadeUniform("corDaLuz");
 		
 	}
 	
@@ -55,6 +65,11 @@ public class StaticShader extends ProgramaShaderPadrao {
 	public void carregarMatrizDeVisualizacao(Camera camera){
 		Matriz4f visualizacao = MatrizDeVisualizacao.criarMatrizDeVisualizacao(camera);
 		super.carregarMatriz4f(localidade_MatrizDeVisualizacao, visualizacao);
+	}
+	
+	public void carregarLuminosidade(Luminosidade luz){
+		super.carregarVetor3f(localidade_PosicaoDaLuz, luz.getPosicao());
+		super.carregarVetor3f(localidade_CorDaLuz, luz.getCor());
 	}
 
 }

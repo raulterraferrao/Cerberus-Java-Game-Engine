@@ -2,18 +2,35 @@
 
 in vec3 pos;
 in vec2 coordenadasDaTextura;
-out vec2 vertexTextura;
+in vec3 normais;
+
+out vec2 vetorTextura;
+out vec3 vetorParaLuz;
+out vec3 normalDaSuperficie;
 
 uniform mat4 matrizDeTransformacao;
 uniform mat4 matrizDeProjecao;
 uniform mat4 matrizDeVisualizacao;
+uniform vec3 posicaoDaLuz;
 
 void main(void){
 	
+	vec4 pos_mundo = matrizDeTransformacao * vec4(pos,1.0);
+	
 	//Onde renderizar os vertices na tela
-	gl_Position = matrizDeProjecao * matrizDeVisualizacao * matrizDeTransformacao * vec4(pos,1.0);
+	
+	gl_Position = matrizDeProjecao * matrizDeVisualizacao * pos_mundo;
+	
 	//O vertexshader não pode lidar com a textura já que ele lida somente com os vertices e não com o que está entre os vertices.
-	vertexTextura = coordenadasDaTextura;
+	
+	vetorTextura = coordenadasDaTextura;
+	
+
+	
+	normalDaSuperficie = (matrizDeTransformacao * vec4(normais,0.0)).xyz;
+	vetorParaLuz = posicaoDaLuz - pos_mundo.xyz;
+	
+	
 	
 
 }
