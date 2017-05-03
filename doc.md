@@ -101,10 +101,10 @@ Obs:A matriz de projeção é carregada no construtor do renderizador, a matriz 
 
 Nessa atualização destruimos o package **matematica** e criamos um novo chamado **matrizesDeTransformacao** , nele está contido as matrizes de transformação, projeção e visualização. Agora também, não estou mais utilizando a biblioteca Vector nem a matrix4f da LWJGL. Estamos utilizando as nossas que criamos anteriormente.
 
-## Luminosidade ##
+## Luminosidade Difusa ##
 
 **luminosidade**
-1.*Luminosidade* : Classe responsável em criar um objeto do tipo Luminosidade que contém um vetor3f de posicao e outro de cor.
+1.*Difusa* : Classe responsável em criar um objeto do tipo Luminosidade que contém um vetor3f de posicao e outro de cor.
 **objetos**
 1.*CarregarObjeto* : No return do construtor colocamos as normais gerenciador.carregarParaVAO(vetorDeVertices, vetorDeTexturas,vetorDeNormais, vetorDeIndices);
 **renderizador**
@@ -114,6 +114,19 @@ Nessa atualização destruimos o package **matematica** e criamos um novo chamad
 1.*StaticShader* : Criamos variaves de localidade para a posicao da luz e sua cor que usaremos como uniform dentro do vertexshader e fragmentshader. Conectamos o in normais com o VAO 3 (NORMAL)
 2.*vertexShader* : Criamos a variaves pos_mundo no qual diz em que posição real o objeto está após ter sido feito a transformação e criamos duas variaves de saida para o fragmentshader que é a normalDaSuperficie e o vetorPraLuz.
 3.*fragmentShader* : Recebemos as normais da superficie o vetor da luz e os normalizamos para que quando fizermos o produto (dot) o tamanho não afete o resultado. Após fazer o dot nós limitamos para ser >=0 e damos como saida a cor da textura * vec4(cor_brilho)
+
+## Luminosidade Especular ##
+
+**luminosidade**
+1.*Especular* : Classe responsável em criar as variáveis que farão com que o objeto tenha reflexo.
+**objetos**
+1.*CarregarObjeto* : No return do construtor colocamos as normais gerenciador.carregarParaVAO(vetorDeVertices, vetorDeTexturas,vetorDeNormais, vetorDeIndices);
+**renderizador**
+1.*Renderizador* : Carrega no shader a luminosidade Especular.
+**shaders**
+1.*StaticShader* : Criamos variaves de localidade para a Superficie Reflexiva e sua reflexividade que usaremos como uniform dentro do vertexshader e fragmentshader. E criamos a função para carregar a luminosidade especular para dentro do entro do vertexshader e fragmentshader
+2.*vertexShader* : Criamos o vetorParaCamera que necessitaremos para dizer se a luz que reflete está perto de onde a camara está posicionada.
+3.*fragmentShader* : Recebemos as variaveis uniforms SuperficieReflexiva e reflexividade , normalizamos o vetorParaCamera e criamos o vetorDaLuzNormalizada que é o inverso do vetorParaLuzNormalizada. Agora sabendo onde aponta o vetor para a camera e onde aponta o vetorDaLuz usamos a função de reflect do glsl para refletir o vetor que vem da luz na superficie ja que sabe qual é a sua normal. Após isso verificamos se a luz refletida está proximo a camera e fazemos o produto dot e virificamos caso for proximo maior será o reflexo do objeto e longe menor será. Utilizamos potencia para simular melhor o reflexo ja que diminiu muito quando é pequeno e diminui quase nada quando é grande.. No final o reflexo é (reflexo * reflexividade *corDaLuz) e somamos esse valor na cor de saida do fragmentShader.
 
 
 

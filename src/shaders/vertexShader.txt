@@ -7,6 +7,7 @@ in vec3 normais;
 out vec2 vetorTextura;
 out vec3 vetorParaLuz;
 out vec3 normalDaSuperficie;
+out vec3 vetorParaCamera;
 
 uniform mat4 matrizDeTransformacao;
 uniform mat4 matrizDeProjecao;
@@ -16,6 +17,7 @@ uniform vec3 posicaoDaLuz;
 void main(void){
 	
 	vec4 pos_mundo = matrizDeTransformacao * vec4(pos,1.0);
+	vec4 pos_camera = inverse(matrizDeVisualizacao) * vec4(0,0,0,1);
 	
 	//Onde renderizar os vertices na tela
 	
@@ -26,9 +28,10 @@ void main(void){
 	vetorTextura = coordenadasDaTextura;
 	
 
-	
 	normalDaSuperficie = (matrizDeTransformacao * vec4(normais,0.0)).xyz;
 	vetorParaLuz = posicaoDaLuz - pos_mundo.xyz;
+	
+	vetorParaCamera = pos_camera.xyz - pos_mundo.xyz;
 	
 	
 	

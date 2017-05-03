@@ -8,7 +8,7 @@ import entidades.Entidade;
 import entradas.MeuMouse;
 import entradas.MeuTeclado;
 import estruturasDeDados.Vetor3f;
-import luminosidades.Luminosidade;
+import luminosidades.Difusa;
 import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
@@ -32,12 +32,14 @@ public class Main {
 		 
 		Objeto obj = CarregarObjeto.carregarObjeto("dragon",gerenciadorDeobj);
 		ModeloDeTextura textura = new ModeloDeTextura(gerenciadorDeobj.carregarTextura("dragonTexture"));
+		textura.setReflexo(10,1);
+		//textura.setSuperficieReflexiva(10);
 		ObjetoComTextura objTextura = new ObjetoComTextura(obj,textura); 
-		
 		Entidade entidade = new Entidade(objTextura,new Vetor3f(0,0,-50),0,0,0,1);
 		Camera camera = new Camera();
 		
-		Luminosidade luz = new Luminosidade(new Vetor3f(-10,-20,-40),new Vetor3f(1,1,1));
+		Difusa luz = new Difusa(new Vetor3f(-10,-20,-40),new Vetor3f(1,1,1));
+		
 		
 		
 		
@@ -48,7 +50,7 @@ public class Main {
 			entidade.aumentarRotacao(0, 1, 0);
 			renderizador.limpar();
 			shader.iniciarPrograma();
-			shader.carregarLuminosidade(luz);
+			shader.carregarLuminosidadeDifusa(luz);
 			shader.carregarMatrizDeVisualizacao(camera);
 			renderizador.renderizar(entidade,shader);
 			shader.fecharPrograma();

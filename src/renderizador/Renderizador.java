@@ -9,6 +9,7 @@ import entidades.Entidade;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
 import shaders.StaticShader;
+import texturas.ModeloDeTextura;
 
 public class Renderizador {
 	
@@ -54,6 +55,11 @@ public class Renderizador {
 		
 		shader.carregarMatrizDeTransformacao(entidade);
 
+		//Carregar iluminosidade Especular
+		
+		ModeloDeTextura textura = objComTextura.getTextura();
+		shader.carregarLuminosidadeEspecular(textura.getReflexo());
+		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, objComTextura.getTextura().getTexturaID());
 		// Função que desenha na tela, iremos desenhar triangulos,Os dados do

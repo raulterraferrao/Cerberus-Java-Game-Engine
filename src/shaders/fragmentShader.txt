@@ -3,6 +3,7 @@
 in vec2 vetorTextura;
 in vec3 normalDaSuperficie;
 in vec3 vetorParaLuz;
+in vec3 vetorParaCamera;
 
 
 out vec4 cor_saida;
@@ -12,23 +13,40 @@ out vec4 cor_saida;
 
 uniform sampler2D texturaSample;
 uniform vec3 corDaLuz;
+uniform float superficieReflexiva;
+uniform float reflexividade;
 
 void main(void){
 
 	vec3 normalDaSuperficieNormalizada = normalize(normalDaSuperficie);
 	vec3 vetorParaLuzNormalizada = normalize(vetorParaLuz);
+	vec3 vetorParaCameraNormalizada = normalize(vetorParaCamera);
+	vec3 vetorDaLuzNormalizada = - vetorParaLuzNormalizada;
 	
 	//Angulatura acima de 90 graus faz o brilho ser negativo 
 	float brilho = dot(normalDaSuperficieNormalizada,vetorParaLuzNormalizada);
 	float intensidade = max(brilho,0);
 	
-	vec3 cor_brilho = intensidade * corDaLuz;
+	vec3 difusa = intensidade * corDaLuz;
+	
+	vec3 vetorLuzRefletida = reflect(vetorDaLuzNormalizada,normalDaSuperficieNormalizada);
+	
+	float fatorReflexivo = dot(vetorLuzRefletida,vetorParaCameraNormalizada);
+	fatorReflexivo = max(fatorReflexivo,0);
+	
+	//Isso faz com que fatorReflexivo pequeno fique ainda mais pequeno e não afete muito os grandes
+	
+	float reflexo = pow(fatorReflexivo,superficieReflexiva);
+	vec3 reflexoFinal = reflexo * reflexividade *corDaLuz;
+	
+	
+	
 	
 
 
 	//texture essa é uma função que pega a textura que passamos e combina com os pixels do nosso objeto e retorna 
 	//a cor de cada pixel no cor_saida, podemos dar strech na textura se colocarmos os vertices como 0.5 ao inves de 1. 
 
-	cor_saida = vec4(cor_brilho,1.0) * texture(texturaSample,vetorTextura);
+	cor_saida = vec4(difusa,1.0) * texture(texturaSample,vetorTextura) + vec4(reflexoFinal,1.0);
 
 }

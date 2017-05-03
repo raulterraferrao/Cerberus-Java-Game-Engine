@@ -2,12 +2,12 @@ package luminosidades;
 
 import estruturasDeDados.Vetor3f;
 
-public class Luminosidade {
+public class Difusa {
 	
 	private Vetor3f posicao;
 	private Vetor3f cor;
 
-	public Luminosidade(Vetor3f pos,Vetor3f cor){
+	public Difusa(Vetor3f pos,Vetor3f cor){
 		this.posicao = pos;
 		this.cor = cor;
 	}

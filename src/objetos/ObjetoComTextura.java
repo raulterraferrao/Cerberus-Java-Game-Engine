@@ -3,7 +3,7 @@ package objetos;
 import texturas.ModeloDeTextura;
 
 public class ObjetoComTextura {
-
+	
 	ModeloDeTextura textura;
 	Objeto objeto;
 	
@@ -19,5 +19,6 @@ public class ObjetoComTextura {
 	public Objeto getObjeto() {
 		return objeto;
 	}
+
 	
 }

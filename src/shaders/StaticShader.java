@@ -4,7 +4,8 @@ package shaders;
 import entidades.Camera;
 import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
-import luminosidades.Luminosidade;
+import luminosidades.Difusa;
+import luminosidades.Especular;
 import matrizesDeTransformacao.MatrizDeProjecao;
 import matrizesDeTransformacao.MatrizDeTransformacao;
 import matrizesDeTransformacao.MatrizDeVisualizacao;
@@ -23,6 +24,8 @@ public class StaticShader extends ProgramaShaderPadrao {
 	private int localidade_MatrizDeVisualizacao;
 	private int localidade_PosicaoDaLuz;
 	private int localidade_CorDaLuz;
+	private int localidade_SuperficieReflexiva;
+	private int localidade_Reflexividade;
 	
 	public StaticShader() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -45,6 +48,8 @@ public class StaticShader extends ProgramaShaderPadrao {
 		localidade_MatrizDeVisualizacao = super.getLocalidadeUniform("matrizDeVisualizacao");
 		localidade_PosicaoDaLuz = super.getLocalidadeUniform("posicaoDaLuz");
 		localidade_CorDaLuz = super.getLocalidadeUniform("corDaLuz");
+		localidade_SuperficieReflexiva = super.getLocalidadeUniform("superficieReflexiva");
+		localidade_Reflexividade = super.getLocalidadeUniform("reflexividade");
 		
 	}
 	
@@ -67,9 +72,14 @@ public class StaticShader extends ProgramaShaderPadrao {
 		super.carregarMatriz4f(localidade_MatrizDeVisualizacao, visualizacao);
 	}
 	
-	public void carregarLuminosidade(Luminosidade luz){
+	public void carregarLuminosidadeDifusa(Difusa luz){
 		super.carregarVetor3f(localidade_PosicaoDaLuz, luz.getPosicao());
 		super.carregarVetor3f(localidade_CorDaLuz, luz.getCor());
+	}
+	
+	public void carregarLuminosidadeEspecular(Especular reflexo){
+		super.carregarFloat(localidade_SuperficieReflexiva, reflexo.getSuperficieReflexiva());
+		super.carregarFloat(localidade_Reflexividade, reflexo.getReflexividade());	
 	}
 
 }
