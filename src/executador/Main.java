@@ -1,6 +1,10 @@
 package executador;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import entidades.Camera;
@@ -13,47 +17,76 @@ import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
 import renderizador.GerenciadorDeObjetos;
-import renderizador.GerenciadorDeJanela;
+import renderizador.GerenciadorDeTempo;
 import renderizador.Renderizador;
+import renderizador.GerenciadorDeJanela;
+import renderizador.RenderizadorDeObjetos;
 import shaders.StaticShader;
 import texturas.ModeloDeTextura;
 
 public class Main {
 
 	public static void main(String[] args) {
-		//Ao iniciar a nossa Engine criamos a Janela 
-		//Do renderizador
+
 		GerenciadorDeJanela.criarDisplay();
 		
 		GerenciadorDeObjetos gerenciadorDeobj = new GerenciadorDeObjetos();
-		StaticShader shader = new StaticShader();
-		Renderizador renderizador = new Renderizador(shader);
-		
 		 
+		//Carrego o modelo do Objeto de uma fonte externa(e.g Blender)
+		
 		Objeto obj = CarregarObjeto.carregarObjeto("dragon",gerenciadorDeobj);
+		
+		//Carrego a textura do Objeto de uma fonte externa(Deve ser .png)
+		
 		ModeloDeTextura textura = new ModeloDeTextura(gerenciadorDeobj.carregarTextura("dragonTexture"));
+	
+		//Coloco o quanto a superficie da textura é reflexiva
+		
 		textura.setReflexo(10,1);
-		//textura.setSuperficieReflexiva(10);
+		
+		//Faço a conexão entre o Modelo do Objeto e a Textura dele
+		
 		ObjetoComTextura objTextura = new ObjetoComTextura(obj,textura); 
-		Entidade entidade = new Entidade(objTextura,new Vetor3f(0,0,-50),0,0,0,1);
+		
+		
 		Camera camera = new Camera();
 		
 		Difusa luz = new Difusa(new Vetor3f(-10,-20,-40),new Vetor3f(1,1,1));
 		
+		List<Entidade> alcateia = new ArrayList<Entidade>();
+		Random aleatorio = new Random();
 		
+		for(int i = 0; i < 2 ; i++){
+			
+			float x = aleatorio.nextFloat() * 50 - 25;
+			float y = 0;
+			float z = aleatorio.nextFloat() * - 150 + 20;
+			
+			alcateia.add(new Entidade(objTextura,new Vetor3f(x, y, z), aleatorio.nextFloat() * 180f, aleatorio.nextFloat() * 180f, 0f, 1f));
+		}
 		
+		//Utiliza-se o GerenciadorDeTempo para fazer a medição de FPS
 		
-		//Verificamos se o X da janela foi clicado
+		GerenciadorDeTempo.getDelta(); // inicar o Delta
+		GerenciadorDeTempo.setUltimoFPS(GerenciadorDeTempo.getTime());
+		
+		Renderizador renderizador = new Renderizador();
+		
+		//Loop principal da Engine que contém a lógica do Jogo
+	
 		while(!Display.isCloseRequested()){
-			//logica do jogo
+			
+			GerenciadorDeTempo.atualizarFPS();						
+			
 			camera.mover();
-			entidade.aumentarRotacao(0, 1, 0);
-			renderizador.limpar();
-			shader.iniciarPrograma();
-			shader.carregarLuminosidadeDifusa(luz);
-			shader.carregarMatrizDeVisualizacao(camera);
-			renderizador.renderizar(entidade,shader);
-			shader.fecharPrograma();
+			
+			for(Entidade dragao : alcateia){
+					dragao.aumentarRotacao(0, 2, 0);
+					renderizador.processarEntidades(dragao);
+			}
+			
+			renderizador.renderizar(luz, camera);
+
 			MeuTeclado.tick();
 			MeuMouse.tick();
 			
@@ -68,8 +101,9 @@ public class Main {
 			
 			GerenciadorDeJanela.atualizarDisplay();
 		}		//Aqui somente será alcançado se fizermos uma requisição de fechar a janela
-		shader.freePrograma();
-		gerenciadorDeobj.Free();
+
+		renderizador.desalocar();
+		gerenciadorDeobj.desalocar();
 
 		GerenciadorDeJanela.fecharDisplay();
 	}

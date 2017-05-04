@@ -125,7 +125,7 @@ public class GerenciadorDeObjetos {
 			
 		}
 		//Método usado para quando querermos fechar a Engine nós tiramos todos os VAOs e VBOs da memória 
-		public void Free(){
+		public void desalocar(){
 			for(int vao:vaos){
 				GL30.glDeleteVertexArrays(vao);
 			}

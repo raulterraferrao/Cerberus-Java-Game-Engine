@@ -3,6 +3,7 @@ package entidades;
 import org.lwjgl.input.Keyboard;
 
 import estruturasDeDados.Vetor3f;
+import matrizesDeTransformacao.MatrizDeProjecao;
 
 public class Camera {
 
@@ -48,6 +49,7 @@ public class Camera {
 	public float getRoll() {
 		return roll;
 	}
+	
 	
 	
 	

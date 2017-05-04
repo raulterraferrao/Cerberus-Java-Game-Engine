@@ -25,7 +25,7 @@ void main(void){
 	
 	//Angulatura acima de 90 graus faz o brilho ser negativo 
 	float brilho = dot(normalDaSuperficieNormalizada,vetorParaLuzNormalizada);
-	float intensidade = max(brilho,0);
+	float intensidade = max(brilho,0.2);
 	
 	vec3 difusa = intensidade * corDaLuz;
 	

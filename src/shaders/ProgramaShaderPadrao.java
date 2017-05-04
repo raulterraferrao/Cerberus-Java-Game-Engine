@@ -65,7 +65,7 @@ public abstract class ProgramaShaderPadrao {
 		GL20.glUseProgram(0);
 	}
 	
-	public void freePrograma(){
+	public void desalocarPrograma(){
 		fecharPrograma();
 		GL20.glDetachShader(programID, vertexShaderID);
 		GL20.glDetachShader(programID, fragmentShaderID);
