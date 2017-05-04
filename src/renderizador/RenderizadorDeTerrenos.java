@@ -9,64 +9,59 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import entidades.Entidade;
-import estruturasDeDados.Matriz4f;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
+import shaders.ShaderTerreno;
 import shaders.StaticShader;
+import terrenos.Terreno;
 import texturas.Textura;
 
-public class RenderizadorDeObjetos {
-	
+public class RenderizadorDeTerrenos {
+
 	private static final int UNBIND = 0;
 	
 	private static final int POSICAO = 0;
 	private static final int TEXTURA = 1;
 	private static final int NORMAL = 2;
 	
-	private StaticShader shader;
-	    
-	public RenderizadorDeObjetos(StaticShader shader){
-		this.shader = shader;
-		shader.iniciarPrograma();
-		shader.carregarMatrizDeProjecao();
-		shader.fecharPrograma();
-	}
+	private ShaderTerreno shaderTerreno;
     
-
-
-	public void renderizar(Map<ObjetoComTextura,List<Entidade>>  entidades){
-		for(ObjetoComTextura modelo : entidades.keySet()){
-			prepararObjetoComTextura(modelo);
-			List<Entidade> lote = entidades.get(modelo);
-			for(Entidade entidade : lote){
-				prepararInstancia(entidade);
-				GL11.glDrawElements(GL11.GL_TRIANGLES, modelo.getObjeto().getQtdVetices(), GL11.GL_UNSIGNED_INT, 0);
-			}
-			
-			unbindModeloDeTextura();
+	public RenderizadorDeTerrenos(ShaderTerreno shaderTerreno){
+		this.shaderTerreno = shaderTerreno;
+		shaderTerreno.iniciarPrograma();
+		shaderTerreno.carregarMatrizDeProjecao();
+		shaderTerreno.fecharPrograma();
+	}
+	
+	public void renderizar(List<Terreno>  terrenos){
+		for(Terreno terreno: terrenos){
+			prepararTerreno(terreno);
+			transformarTerreno(terreno);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, terreno.getModelo().getQtdVetices(), GL11.GL_UNSIGNED_INT, 0);
+			unbindTerreno();
 		}
 	}
 	
-	public void prepararObjetoComTextura(ObjetoComTextura modelo){
+	public void prepararTerreno(Terreno terreno){
 
-		Objeto objComum = modelo.getObjeto();
-		GL30.glBindVertexArray(objComum.getVaoID());
+		Objeto modeloTerreno = terreno.getModelo();
+		GL30.glBindVertexArray(modeloTerreno.getVaoID());
 		GL20.glEnableVertexAttribArray(POSICAO);
 		GL20.glEnableVertexAttribArray(TEXTURA);
 		GL20.glEnableVertexAttribArray(NORMAL);
 		
-		Textura textura = modelo.getTextura();
-		shader.carregarLuminosidadeEspecular(textura.getReflexo());
+		Textura textura = terreno.getTextura();
+		shaderTerreno.carregarLuminosidadeEspecular(textura.getReflexo());
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, modelo.getTextura().getTexturaID());
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, terreno.getTextura().getTexturaID());
 	}
 	
-	public void prepararInstancia(Entidade entidade){
+	public void transformarTerreno(Terreno terreno){
 		
-		shader.carregarMatrizDeTransformacao(entidade);
+		shaderTerreno.carregarMatrizDeTransformacao(terreno);
 	}
 	
-	public void unbindModeloDeTextura(){
+	public void unbindTerreno(){
 		GL20.glDisableVertexAttribArray(POSICAO);
 		GL20.glDisableVertexAttribArray(TEXTURA);
 		GL20.glDisableVertexAttribArray(NORMAL);

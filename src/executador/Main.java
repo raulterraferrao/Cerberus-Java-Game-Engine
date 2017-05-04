@@ -19,10 +19,9 @@ import objetos.ObjetoComTextura;
 import renderizador.GerenciadorDeObjetos;
 import renderizador.GerenciadorDeTempo;
 import renderizador.Renderizador;
+import terrenos.Terreno;
 import renderizador.GerenciadorDeJanela;
-import renderizador.RenderizadorDeObjetos;
-import shaders.StaticShader;
-import texturas.ModeloDeTextura;
+import texturas.Textura;
 
 public class Main {
 
@@ -38,7 +37,7 @@ public class Main {
 		
 		//Carrego a textura do Objeto de uma fonte externa(Deve ser .png)
 		
-		ModeloDeTextura textura = new ModeloDeTextura(gerenciadorDeobj.carregarTextura("dragonTexture"));
+		Textura textura = new Textura(gerenciadorDeobj.carregarTextura("dragonTexture"));
 	
 		//Coloco o quanto a superficie da textura é reflexiva
 		
@@ -51,7 +50,13 @@ public class Main {
 		
 		Camera camera = new Camera();
 		
-		Difusa luz = new Difusa(new Vetor3f(-10,-20,-40),new Vetor3f(1,1,1));
+		Difusa luz = new Difusa(new Vetor3f(0,40,0),new Vetor3f(1,1,1));
+		
+		Terreno terreno1 = new Terreno(0, -1, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass")));
+		Terreno terreno2 = new Terreno(-1, -1, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass1")));
+		Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass2")));
+		Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass3")));
+		
 		
 		List<Entidade> alcateia = new ArrayList<Entidade>();
 		Random aleatorio = new Random();
@@ -59,7 +64,7 @@ public class Main {
 		for(int i = 0; i < 2 ; i++){
 			
 			float x = aleatorio.nextFloat() * 50 - 25;
-			float y = 0;
+			float y = 10;
 			float z = aleatorio.nextFloat() * - 150 + 20;
 			
 			alcateia.add(new Entidade(objTextura,new Vetor3f(x, y, z), aleatorio.nextFloat() * 180f, aleatorio.nextFloat() * 180f, 0f, 1f));
@@ -84,6 +89,10 @@ public class Main {
 					dragao.aumentarRotacao(0, 2, 0);
 					renderizador.processarEntidades(dragao);
 			}
+			renderizador.processarTerrenos(terreno1);
+			renderizador.processarTerrenos(terreno2);
+			renderizador.processarTerrenos(terreno3);
+			renderizador.processarTerrenos(terreno4);
 			
 			renderizador.renderizar(luz, camera);
 

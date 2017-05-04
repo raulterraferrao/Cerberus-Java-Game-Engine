@@ -2,12 +2,12 @@ package texturas;
 
 import luminosidades.Especular;
 
-public class ModeloDeTextura {
+public class Textura {
 
 	private int texturaID;
 	private Especular reflexo = new Especular();
 	
-	public ModeloDeTextura(int texturaID){
+	public Textura(int texturaID){
 		this.texturaID = texturaID;
 	}
 	

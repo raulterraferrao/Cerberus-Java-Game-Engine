@@ -3,12 +3,11 @@ package entidades;
 import org.lwjgl.input.Keyboard;
 
 import estruturasDeDados.Vetor3f;
-import matrizesDeTransformacao.MatrizDeProjecao;
 
 public class Camera {
 
-	Vetor3f posicao = new Vetor3f(0,0,1);
-	float pitch;
+	Vetor3f posicao = new Vetor3f(0,10,0);
+	float pitch = 0;
 	float yaw = 0;
 	float roll;
 	
@@ -34,6 +33,12 @@ public class Camera {
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_G)){
 			yaw -= 0.60f; 
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_R)){
+			pitch += 0.60f; 
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_T)){
+			pitch -= 0.60f; 
 		}
 	}
 	
