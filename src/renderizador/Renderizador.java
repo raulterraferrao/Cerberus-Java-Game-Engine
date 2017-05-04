@@ -28,9 +28,8 @@ public class Renderizador {
 	
 	public void renderizar(Difusa sol, Camera camera){
 
-		//Cortar a face obscura o objeto
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
+		habilitarCullFace();
+
 		limpar();
 		
 		shader.iniciarPrograma();
@@ -69,6 +68,19 @@ public class Renderizador {
 		shader.desalocarPrograma();
 		shaderTerreno.desalocarPrograma();
 	}
+	
+	public static void habilitarCullFace(){
+		
+		//Cortar a face obscura o objeto
+		
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_BACK);
+	}
+	
+	public static void desabilitarCullFace(){
+				
+		GL11.glDisable(GL11.GL_CULL_FACE);
+	}	
 	
     
 	/***

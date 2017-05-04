@@ -9,6 +9,7 @@ import luminosidades.Especular;
 import matrizesDeTransformacao.MatrizDeProjecao;
 import matrizesDeTransformacao.MatrizDeTransformacao;
 import matrizesDeTransformacao.MatrizDeVisualizacao;
+import texturas.Textura;
 
 public class StaticShader extends ProgramaShaderPadrao {
 
@@ -26,6 +27,7 @@ public class StaticShader extends ProgramaShaderPadrao {
 	private int localidade_CorDaLuz;
 	private int localidade_SuperficieReflexiva;
 	private int localidade_Reflexividade;
+	private int localidade_IluminosidadeFalsa;
 	
 	public StaticShader() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -50,7 +52,7 @@ public class StaticShader extends ProgramaShaderPadrao {
 		localidade_CorDaLuz = super.getLocalidadeUniform("corDaLuz");
 		localidade_SuperficieReflexiva = super.getLocalidadeUniform("superficieReflexiva");
 		localidade_Reflexividade = super.getLocalidadeUniform("reflexividade");
-		
+		localidade_IluminosidadeFalsa = super.getLocalidadeUniform("iluminosidadeFalsa");
 	}
 	
 	public void carregarMatrizDeTransformacao(Entidade entidade){
@@ -80,6 +82,10 @@ public class StaticShader extends ProgramaShaderPadrao {
 	public void carregarLuminosidadeEspecular(Especular reflexo){
 		super.carregarFloat(localidade_SuperficieReflexiva, reflexo.getSuperficieReflexiva());
 		super.carregarFloat(localidade_Reflexividade, reflexo.getReflexividade());	
+	}
+	
+	public void carregarIluminosidadeFalsa(Textura textura){
+		super.carregarBooleano(localidade_IluminosidadeFalsa, textura.isIluminosidadeFalsa());
 	}
 
 }

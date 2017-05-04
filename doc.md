@@ -128,5 +128,17 @@ Nessa atualização destruimos o package **matematica** e criamos um novo chamad
 2.*vertexShader* : Criamos o vetorParaCamera que necessitaremos para dizer se a luz que reflete está perto de onde a camara está posicionada.
 3.*fragmentShader* : Recebemos as variaveis uniforms SuperficieReflexiva e reflexividade , normalizamos o vetorParaCamera e criamos o vetorDaLuzNormalizada que é o inverso do vetorParaLuzNormalizada. Agora sabendo onde aponta o vetor para a camera e onde aponta o vetorDaLuz usamos a função de reflect do glsl para refletir o vetor que vem da luz na superficie ja que sabe qual é a sua normal. Após isso verificamos se a luz refletida está proximo a camera e fazemos o produto dot e virificamos caso for proximo maior será o reflexo do objeto e longe menor será. Utilizamos potencia para simular melhor o reflexo ja que diminiu muito quando é pequeno e diminui quase nada quando é grande.. No final o reflexo é (reflexo * reflexividade *corDaLuz) e somamos esse valor na cor de saida do fragmentShader.
 
+## Terreno ##
+
+Criamos novos shaders para lidar com o terreno, como vertexShaderTerreno, fragmentShaderTerreno, ShaderTerreno e RenderizadorDeTerreno
+
+## Transparencia de Textura ##
+
+Quando fazemos uma importação de uma textura que tem transparencia o renderizador o renderizava com o fundo preto ao invés de transparente. Para que isso não aconteça criamos um booleano na textura dizendo se ela contem transparencia ou não. Caso verdadeiro nós discartavamos o pixel quando o alpha era acima de 0.5 dentro do fragment shader. Também havia outro problema que era que o renderizador quando tem transparencia ele tem o problema de não renderizar algo atras do objeto com o CullFace e desativamos-o caso a textura seja transparente. Nós criamos a iluminosidadeFalsa que faz com que quando importamos objetos como a planta que é somente dois quadrados um perpendicular ao outro as normais eram perpendiculares tbm e isso fazia com que as plantas apareciam com a iluminosidade bastante diferentes. Para isso nos importamos a variavel que criamos na Textura para o vertexShader pela forma de uniform e verificamos caso queremos que a textura tenha uma iluminosidadeFalsa nós colocavamos todas as suas normais para cima, deste modo a diferença entre um quadrado ao outro mesmo sendo perpendicular não afetava na iluminosidade da planta.
+
+ 
+
+
+
 
 

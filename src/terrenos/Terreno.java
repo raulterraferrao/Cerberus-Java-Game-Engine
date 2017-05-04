@@ -1,6 +1,5 @@
 package terrenos;
 
-import objetos.CarregarObjeto;
 import objetos.Objeto;
 import renderizador.GerenciadorDeObjetos;
 import texturas.Textura;

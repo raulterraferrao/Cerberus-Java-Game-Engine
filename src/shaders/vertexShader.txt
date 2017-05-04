@@ -13,6 +13,7 @@ uniform mat4 matrizDeTransformacao;
 uniform mat4 matrizDeProjecao;
 uniform mat4 matrizDeVisualizacao;
 uniform vec3 posicaoDaLuz;
+uniform float iluminosidadeFalsa;
 
 void main(void){
 	
@@ -27,13 +28,17 @@ void main(void){
 	
 	vetorTextura = coordenadasDaTextura;
 	
-
-	normalDaSuperficie = (matrizDeTransformacao * vec4(normais,0.0)).xyz;
+	if(iluminosidadeFalsa > 0.5){
+		normalDaSuperficie = vec3(0.0,1.0,0.0);
+	}
+	else{
+		normalDaSuperficie = (matrizDeTransformacao * vec4(normais,0.0)).xyz;
+	}
 	vetorParaLuz = posicaoDaLuz - pos_mundo.xyz;
 	
 	vetorParaCamera = pos_camera.xyz - pos_mundo.xyz;
 	
-	
+
 	
 
 }

@@ -40,13 +40,14 @@ void main(void){
 	vec3 reflexoFinal = reflexo * reflexividade *corDaLuz;
 	
 	
-	
-	
-
+	vec4 corDaTextura = texture(texturaSample,vetorTextura);
+	if(corDaTextura.a < 0.5){
+		discard;
+	}
 
 	//texture essa é uma função que pega a textura que passamos e combina com os pixels do nosso objeto e retorna 
 	//a cor de cada pixel no cor_saida, podemos dar strech na textura se colocarmos os vertices como 0.5 ao inves de 1. 
 
-	cor_saida = vec4(difusa,1.0) * texture(texturaSample,vetorTextura) + vec4(reflexoFinal,1.0);
+	cor_saida = vec4(difusa,1.0) * corDaTextura + vec4(reflexoFinal,1.0);
 
 }

@@ -56,6 +56,10 @@ public class RenderizadorDeObjetos {
 		GL20.glEnableVertexAttribArray(NORMAL);
 		
 		Textura textura = modelo.getTextura();
+		if(textura.isTransparente()){
+			Renderizador.desabilitarCullFace();
+		}
+		shader.carregarIluminosidadeFalsa(textura);
 		shader.carregarLuminosidadeEspecular(textura.getReflexo());
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, modelo.getTextura().getTexturaID());
@@ -67,6 +71,7 @@ public class RenderizadorDeObjetos {
 	}
 	
 	public void unbindModeloDeTextura(){
+		Renderizador.habilitarCullFace();
 		GL20.glDisableVertexAttribArray(POSICAO);
 		GL20.glDisableVertexAttribArray(TEXTURA);
 		GL20.glDisableVertexAttribArray(NORMAL);
