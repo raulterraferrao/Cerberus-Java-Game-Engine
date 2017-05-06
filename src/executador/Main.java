@@ -40,12 +40,14 @@ public class Main {
 		
 		Objeto modeloDragao = CarregarObjeto.carregarObjeto("dragon",gerenciadorDeobj);
 		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("grassModel",gerenciadorDeobj);
+		Objeto modeloArvore = CarregarObjeto.carregarObjeto("lowPolyTree", gerenciadorDeobj);
 		
 		//Carrego a textura do Objeto de uma fonte externa(Deve ser .png)
 		
 		Textura texturaDragao = new Textura(gerenciadorDeobj.carregarTextura("dragonTexture"));
 		Textura texturaPlanta = new Textura(gerenciadorDeobj.carregarTextura("grassTexture"));
-	
+		Textura texturaArvore = new Textura(gerenciadorDeobj.carregarTextura("lowPolyTree"));
+		
 		//Coloco o quanto a superficie da textura é reflexiva
 		
 		texturaDragao.setReflexo(10,1);
@@ -61,22 +63,26 @@ public class Main {
 		//Faço a conexão entre o Modelo do Objeto e a Textura dele
 		
 		ObjetoComTextura objetoDragao = new ObjetoComTextura(modeloDragao,texturaDragao);
-		ObjetoComTextura objetoPlanta = new ObjetoComTextura(modeloPlanta,texturaPlanta); 
+		ObjetoComTextura objetoPlanta = new ObjetoComTextura(modeloPlanta,texturaPlanta);
+		ObjetoComTextura objetoArvore = new ObjetoComTextura(modeloArvore,texturaArvore); 
 		
 		//Faço a transformação dos Objetos e o transformo em Entidades
 		
-		List<Entidade> alcateia = new ArrayList<Entidade>();
+		List<Entidade> floresta = new ArrayList<Entidade>();
+		List<Entidade> capinzal = new ArrayList<Entidade>();
 		Random aleatorio = new Random();
 		
-		for(int i = 0; i < 2 ; i++){
+		for(int i = 0; i < 100 ; i++){
 			
-			float x = aleatorio.nextFloat() * 50 - 25;
+			float x = aleatorio.nextFloat()*100 - 50;
 			float y = 0;
-			float z = aleatorio.nextFloat() * - 150 -20;
+			float z = aleatorio.nextFloat() * - 1000 -20;
 			
-			alcateia.add(new Entidade(objetoDragao,new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
+			capinzal.add(new Entidade(objetoPlanta,new Vetor3f((x+30), y, (z-15)),0f, 0f, 0f, 1f));
+			floresta.add(new Entidade(objetoArvore,new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
 		}
 		
+		Entidade dragao = new Entidade(objetoDragao,new Vetor3f(0, 0, -50), 0f, 0f, 0f, 1f);
 		Entidade planta = new Entidade(objetoPlanta,new Vetor3f(0, 0, -30), 0f, 0f, 0f, 1f);
 
 		//Criação de Terrenos
@@ -106,11 +112,14 @@ public class Main {
 			
 			//Renderizar Entidades
 			
-			for(Entidade dragaoObj : alcateia){
-				dragaoObj.aumentarRotacao(0, 2, 0);
-					renderizador.processarEntidades(dragaoObj);
+			for(Entidade aArvore : floresta){
+					renderizador.processarEntidades(aArvore);
 			}
-			
+			for(Entidade aGrama : capinzal){
+				renderizador.processarEntidades(aGrama);
+		}
+			dragao.aumentarRotacao(0, 2, 0);
+			renderizador.processarEntidades(dragao);
 			renderizador.processarEntidades(planta);
 			
 			//Renderizar Terrenos

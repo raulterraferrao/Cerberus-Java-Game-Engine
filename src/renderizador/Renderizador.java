@@ -14,10 +14,14 @@ import objetos.ObjetoComTextura;
 import shaders.ShaderTerreno;
 import shaders.StaticShader;
 import terrenos.Terreno;
-import texturas.Textura;
 
 public class Renderizador {
 
+	private static final float VERMELHO = 0.5f;
+	private static final float VERDE = 0.5f;
+	private static final float AZUL = 1;
+	private static final float ALPHA = 1;
+	
 	private StaticShader shader = new StaticShader();
 	private ShaderTerreno shaderTerreno = new ShaderTerreno();
 	private RenderizadorDeObjetos renderizador = new RenderizadorDeObjetos(shader);
@@ -35,12 +39,14 @@ public class Renderizador {
 		shader.iniciarPrograma();
 		shader.carregarLuminosidadeDifusa(sol);
 		shader.carregarMatrizDeVisualizacao(camera);
+		shader.carregarCorDoCeu(VERMELHO, VERDE, AZUL);
 		renderizador.renderizar(entidades);
 		shader.fecharPrograma();
 		
 		shaderTerreno.iniciarPrograma();
 		shaderTerreno.carregarLuminosidadeDifusa(sol);
 		shaderTerreno.carregarMatrizDeVisualizacao(camera);
+		shaderTerreno.carregarCorDoCeu(VERMELHO, VERDE, AZUL);
 		renderizadorTerreno.renderizar(terrenos);
 		shaderTerreno.fecharPrograma();
 		
@@ -92,7 +98,7 @@ public class Renderizador {
 
 		//Necessito falar pro opengl verificar qual triangulo está na frente.
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glClearColor(1, 1, 1, 0.7f);
+		GL11.glClearColor(VERMELHO, VERDE, AZUL, ALPHA);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	

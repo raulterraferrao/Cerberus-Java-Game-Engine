@@ -27,6 +27,7 @@ public class ShaderTerreno extends ProgramaShaderPadrao{
 	private int localidade_CorDaLuz;
 	private int localidade_SuperficieReflexiva;
 	private int localidade_Reflexividade;
+	private int localidade_CorDoCeu;
 	
 	public ShaderTerreno() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -51,7 +52,7 @@ public class ShaderTerreno extends ProgramaShaderPadrao{
 		localidade_CorDaLuz = super.getLocalidadeUniform("corDaLuz");
 		localidade_SuperficieReflexiva = super.getLocalidadeUniform("superficieReflexiva");
 		localidade_Reflexividade = super.getLocalidadeUniform("reflexividade");
-		
+		localidade_CorDoCeu = super.getLocalidadeUniform("corDoCeu");
 	}
 	
 	public void carregarMatrizDeTransformacao(Terreno terreno){
@@ -81,5 +82,9 @@ public class ShaderTerreno extends ProgramaShaderPadrao{
 	public void carregarLuminosidadeEspecular(Especular reflexo){
 		super.carregarFloat(localidade_SuperficieReflexiva, reflexo.getSuperficieReflexiva());
 		super.carregarFloat(localidade_Reflexividade, reflexo.getReflexividade());	
+	}
+	
+	public void carregarCorDoCeu(float vermelho, float verde, float azul){
+		super.carregarVetor3f(localidade_CorDoCeu, new Vetor3f(vermelho, verde, azul));
 	}
 }

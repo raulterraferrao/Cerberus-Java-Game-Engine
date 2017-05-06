@@ -4,6 +4,7 @@ package shaders;
 import entidades.Camera;
 import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
+import estruturasDeDados.Vetor3f;
 import luminosidades.Difusa;
 import luminosidades.Especular;
 import matrizesDeTransformacao.MatrizDeProjecao;
@@ -28,6 +29,7 @@ public class StaticShader extends ProgramaShaderPadrao {
 	private int localidade_SuperficieReflexiva;
 	private int localidade_Reflexividade;
 	private int localidade_IluminosidadeFalsa;
+	private int localidade_CorDoCeu;
 	
 	public StaticShader() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -53,6 +55,7 @@ public class StaticShader extends ProgramaShaderPadrao {
 		localidade_SuperficieReflexiva = super.getLocalidadeUniform("superficieReflexiva");
 		localidade_Reflexividade = super.getLocalidadeUniform("reflexividade");
 		localidade_IluminosidadeFalsa = super.getLocalidadeUniform("iluminosidadeFalsa");
+		localidade_CorDoCeu = super.getLocalidadeUniform("corDoCeu");
 	}
 	
 	public void carregarMatrizDeTransformacao(Entidade entidade){
@@ -86,6 +89,10 @@ public class StaticShader extends ProgramaShaderPadrao {
 	
 	public void carregarIluminosidadeFalsa(Textura textura){
 		super.carregarBooleano(localidade_IluminosidadeFalsa, textura.isIluminosidadeFalsa());
+	}
+	
+	public void carregarCorDoCeu(float vermelho, float verde, float azul){
+		super.carregarVetor3f(localidade_CorDoCeu, new Vetor3f(vermelho, verde, azul));
 	}
 
 }

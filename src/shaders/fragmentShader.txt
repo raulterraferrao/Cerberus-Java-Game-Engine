@@ -4,6 +4,7 @@ in vec2 vetorTextura;
 in vec3 normalDaSuperficie;
 in vec3 vetorParaLuz;
 in vec3 vetorParaCamera;
+in float visibilidade;
 
 
 out vec4 cor_saida;
@@ -15,6 +16,7 @@ uniform sampler2D texturaSample;
 uniform vec3 corDaLuz;
 uniform float superficieReflexiva;
 uniform float reflexividade;
+uniform vec3 corDoCeu;
 
 void main(void){
 
@@ -24,6 +26,7 @@ void main(void){
 	vec3 vetorDaLuzNormalizada = - vetorParaLuzNormalizada;
 	
 	//Angulatura acima de 90 graus faz o brilho ser negativo 
+	
 	float brilho = dot(normalDaSuperficieNormalizada,vetorParaLuzNormalizada);
 	float intensidade = max(brilho,0.2);
 	
@@ -49,5 +52,9 @@ void main(void){
 	//a cor de cada pixel no cor_saida, podemos dar strech na textura se colocarmos os vertices como 0.5 ao inves de 1. 
 
 	cor_saida = vec4(difusa,1.0) * corDaTextura + vec4(reflexoFinal,1.0);
+	
+	//Aqui nós fazemos o fog
+	
+	cor_saida = mix(vec4(corDoCeu,1.0),cor_saida,visibilidade);
 
 }

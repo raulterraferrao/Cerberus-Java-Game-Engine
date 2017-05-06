@@ -97,7 +97,7 @@ public abstract class ProgramaShaderPadrao {
 		  GL20.glCompileShader(shaderID);
 		  if(GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS )== GL11.GL_FALSE){
 		   System.out.println(GL20.glGetShaderInfoLog(shaderID, 500));
-		   System.err.println("N�o pode compilar o arquivo shader!");
+		   System.err.println("Não pode compilar o arquivo shader!");
 		   System.exit(-1);
 		  }
 		  return shaderID;
@@ -122,6 +122,10 @@ public abstract class ProgramaShaderPadrao {
 		matriz.bufferizar(matriz4fBuffer);
 		matriz4fBuffer.flip();
 		GL20.glUniformMatrix4(localidade, false, matriz4fBuffer);
+	}
+	
+	protected void carregarInteiro(int localidade, int inteiro){
+		GL20.glUniform1i(localidade, inteiro);
 	}
 	
 }

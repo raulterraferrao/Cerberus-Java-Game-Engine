@@ -54,7 +54,7 @@ public class GerenciadorDeObjetos {
 			return vaoID;
 		}
 		
-		private void carregarVBOParaVAO(int pos,int tamanhoCoordenadas,float[] vertices){
+		private void carregarVBOParaVAO(int pos,int tamanhoCoordenadas,float[] dados){
 			//Geramos um VBO e recebemos o seu ID
 			int vboID = GL15.glGenBuffers();
 			//Ao criar um vbo colocamos-o na lista para depois apaga-los
@@ -62,17 +62,11 @@ public class GerenciadorDeObjetos {
 			//O nosso VBO vai ser um Array_Buffer e passamos tbm o ID do nosso VBO para dar Bind
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
 			//Tranformamos os dados de array de float para um buffer de float
-			FloatBuffer buffer = guardarDadosComoFloatBuffer(vertices);
+			FloatBuffer buffer = guardarDadosComoFloatBuffer(dados);
 			//Aqui nós guardamos esse buffer no VBO
 			//Utilizamos o (usage) como static pois não vamos modifica-lo após cria-lo
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
 			//Agora colocamos o nosso VBO no nosso VAO
-			//index: É a posição que queremos colocar o vbo no vao
-			//size: O tamanho de cada vertice( 3 pois criaremos uma engine 3D)
-			//type: Tipo de dado
-			//normalized: Se o buffer é normalizado
-			//stride: A quantidade de dados que temos entre os vertices(utilizado futuramente para cor etc)
-			//offset: Se temos algum offset no buffer
 			GL20.glVertexAttribPointer(pos, tamanhoCoordenadas,GL11.GL_FLOAT,false,0,0);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);			
 		}
