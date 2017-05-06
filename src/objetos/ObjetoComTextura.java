@@ -1,18 +1,18 @@
 package objetos;
 
-import texturas.Textura;
+import texturas.TexturaDeEntidade;
 
 public class ObjetoComTextura {
 	
-	Textura textura;
+	TexturaDeEntidade textura;
 	Objeto objeto;
 	
-	public ObjetoComTextura(Objeto objeto,Textura textura){
+	public ObjetoComTextura(Objeto objeto,TexturaDeEntidade textura){
 		this.objeto = objeto;
 		this.textura = textura;
 	}
 
-	public Textura getTextura() {
+	public TexturaDeEntidade getTextura() {
 		return textura;
 	}
 

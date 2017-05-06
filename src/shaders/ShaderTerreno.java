@@ -1,7 +1,6 @@
 package shaders;
 
 import entidades.Camera;
-import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
 import estruturasDeDados.Vetor3f;
 import luminosidades.Difusa;
@@ -28,6 +27,11 @@ public class ShaderTerreno extends ProgramaShaderPadrao{
 	private int localidade_SuperficieReflexiva;
 	private int localidade_Reflexividade;
 	private int localidade_CorDoCeu;
+	private int localidade_TexturaVermelha;
+	private int localidade_TexturaVerde;
+	private int localidade_TexturaAzul;
+	private int localidade_TexturaPreta;
+	private int localidade_TexturaDeMistura;
 	
 	public ShaderTerreno() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -53,6 +57,11 @@ public class ShaderTerreno extends ProgramaShaderPadrao{
 		localidade_SuperficieReflexiva = super.getLocalidadeUniform("superficieReflexiva");
 		localidade_Reflexividade = super.getLocalidadeUniform("reflexividade");
 		localidade_CorDoCeu = super.getLocalidadeUniform("corDoCeu");
+		localidade_TexturaVermelha = super.getLocalidadeUniform("texturaVermelha");
+		localidade_TexturaVerde = super.getLocalidadeUniform("texturaVerde");
+		localidade_TexturaAzul= super.getLocalidadeUniform("texturaAzul");
+		localidade_TexturaPreta = super.getLocalidadeUniform("texturaPreta");
+		localidade_TexturaDeMistura = super.getLocalidadeUniform("texturaDeMistura");
 	}
 	
 	public void carregarMatrizDeTransformacao(Terreno terreno){
@@ -86,5 +95,13 @@ public class ShaderTerreno extends ProgramaShaderPadrao{
 	
 	public void carregarCorDoCeu(float vermelho, float verde, float azul){
 		super.carregarVetor3f(localidade_CorDoCeu, new Vetor3f(vermelho, verde, azul));
+	}
+	
+	public void carregarTexturasTerreno(){
+		super.carregarInteiro(localidade_TexturaVermelha, 0);
+		super.carregarInteiro(localidade_TexturaVerde, 1);
+		super.carregarInteiro(localidade_TexturaAzul, 2);
+		super.carregarInteiro(localidade_TexturaPreta, 3);
+		super.carregarInteiro(localidade_TexturaDeMistura, 4);
 	}
 }

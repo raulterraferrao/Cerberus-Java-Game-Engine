@@ -21,7 +21,9 @@ import renderizador.GerenciadorDeTempo;
 import renderizador.Renderizador;
 import terrenos.Terreno;
 import renderizador.GerenciadorDeJanela;
-import texturas.Textura;
+import texturas.PacoteDeTexturaDeTerreno;
+import texturas.TexturaDeEntidade;
+import texturas.TexturaDeTerreno;
 
 public class Main {
 
@@ -42,11 +44,25 @@ public class Main {
 		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("grassModel",gerenciadorDeobj);
 		Objeto modeloArvore = CarregarObjeto.carregarObjeto("lowPolyTree", gerenciadorDeobj);
 		
+		//=========================TEXTURAS========================//
+		
 		//Carrego a textura do Objeto de uma fonte externa(Deve ser .png)
 		
-		Textura texturaDragao = new Textura(gerenciadorDeobj.carregarTextura("dragonTexture"));
-		Textura texturaPlanta = new Textura(gerenciadorDeobj.carregarTextura("grassTexture"));
-		Textura texturaArvore = new Textura(gerenciadorDeobj.carregarTextura("lowPolyTree"));
+		TexturaDeEntidade texturaDragao = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("dragonTexture"));
+		TexturaDeEntidade texturaPlanta = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grassTexture"));
+		TexturaDeEntidade texturaArvore = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("lowPolyTree"));
+		
+		//Carrego a textura do Terreno de uma fonte externa(Deve ser .png)
+		
+		TexturaDeTerreno texturaGrama =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("grass"));
+		TexturaDeTerreno texturaGramaComFlor =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("gramaComFlor"));
+		TexturaDeTerreno texturaDeserto =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("deserto"));
+		TexturaDeTerreno texturaCaminho =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("caminho"));
+		TexturaDeTerreno texturaDeMistura = new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("mistura"));
+		
+		PacoteDeTexturaDeTerreno pacoteDeTextura = new PacoteDeTexturaDeTerreno(texturaDeserto, texturaGramaComFlor, texturaCaminho, texturaGrama);	
+		
+		//==========================================================//
 		
 		//Coloco o quanto a superficie da textura é reflexiva
 		
@@ -87,10 +103,10 @@ public class Main {
 
 		//Criação de Terrenos
 		
-		Terreno terreno1 = new Terreno(0, -1, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass")));
-		Terreno terreno2 = new Terreno(-1, -1, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass1")));
-		Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass2")));
-		Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, new Textura(gerenciadorDeobj.carregarTextura("grass3")));
+		Terreno terreno1 = new Terreno(-1, -1, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
+		Terreno terreno2 = new Terreno(0, -1, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
+		//Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grass2")));
+		//Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grass3")));
 		
 		
 		//Utiliza-se o GerenciadorDeTempo para fazer a medição de FPS
@@ -126,8 +142,8 @@ public class Main {
 			
 			renderizador.processarTerrenos(terreno1);
 			renderizador.processarTerrenos(terreno2);
-			renderizador.processarTerrenos(terreno3);
-			renderizador.processarTerrenos(terreno4);
+			//renderizador.processarTerrenos(terreno3);
+			//renderizador.processarTerrenos(terreno4);
 			
 			
 

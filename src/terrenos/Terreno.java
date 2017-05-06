@@ -2,7 +2,8 @@ package terrenos;
 
 import objetos.Objeto;
 import renderizador.GerenciadorDeObjetos;
-import texturas.Textura;
+import texturas.PacoteDeTexturaDeTerreno;
+import texturas.TexturaDeTerreno;
 
 public class Terreno {
 
@@ -12,31 +13,17 @@ public class Terreno {
 	private float x;
 	private float z;
 	
-	Objeto modelo;
-	Textura textura;
+	private Objeto modelo;
+	private PacoteDeTexturaDeTerreno texturas;
+	private TexturaDeTerreno texturaDeMistura;
 	
-	public float getX() {
-		return x;
-	}
-
-	public float getZ() {
-		return z;
-	}
-
-	public Objeto getModelo() {
-		return modelo;
-	}
-
-	public Textura getTextura() {
-		return textura;
-	}
-
-	public Terreno(int malhaX,int malhaZ,GerenciadorDeObjetos gerenciador,Textura textura){
-		this.textura = textura;
+	public Terreno(float malhaX, float malhaZ,GerenciadorDeObjetos gerenciador, PacoteDeTexturaDeTerreno texturas,
+			TexturaDeTerreno texturaDeMistura) {
 		this.x = malhaX * TAMANHO;
 		this.z = malhaZ * TAMANHO;
 		this.modelo = gerarTerreno(gerenciador);
-		
+		this.texturas = texturas;
+		this.texturaDeMistura = texturaDeMistura;
 	}
 	
 	private Objeto gerarTerreno(GerenciadorDeObjetos gerenciador){
@@ -76,4 +63,47 @@ public class Terreno {
 		}
 		return gerenciador.carregarParaVAO(vertices, coordenadasDaTextura, normais, indices);
 	}
+	
+	public float getX() {
+		return x;
+	}
+
+	public float getZ() {
+		return z;
+	}
+
+	public Objeto getModelo() {
+		return modelo;
+	}
+
+	public PacoteDeTexturaDeTerreno getTexturas() {
+		return texturas;
+	}
+
+	public void setTexturas(PacoteDeTexturaDeTerreno texturas) {
+		this.texturas = texturas;
+	}
+
+	public TexturaDeTerreno getTexturaDeMistura() {
+		return texturaDeMistura;
+	}
+
+	public void setTexturaDeMistura(TexturaDeTerreno texturaDeMistura) {
+		this.texturaDeMistura = texturaDeMistura;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public void setZ(float z) {
+		this.z = z;
+	}
+
+	public void setModelo(Objeto modelo) {
+		this.modelo = modelo;
+	}
+	
+	
+	
 }

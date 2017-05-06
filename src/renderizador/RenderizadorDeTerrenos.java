@@ -8,10 +8,12 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import luminosidades.Especular;
 import objetos.Objeto;
 import shaders.ShaderTerreno;
 import terrenos.Terreno;
-import texturas.Textura;
+import texturas.PacoteDeTexturaDeTerreno;
+import texturas.TexturaDeEntidade;
 
 public class RenderizadorDeTerrenos {
 
@@ -27,6 +29,7 @@ public class RenderizadorDeTerrenos {
 		this.shaderTerreno = shaderTerreno;
 		shaderTerreno.iniciarPrograma();
 		shaderTerreno.carregarMatrizDeProjecao();
+		shaderTerreno.carregarTexturasTerreno();
 		shaderTerreno.fecharPrograma();
 	}
 	
@@ -46,16 +49,30 @@ public class RenderizadorDeTerrenos {
 		GL20.glEnableVertexAttribArray(POSICAO);
 		GL20.glEnableVertexAttribArray(TEXTURA);
 		GL20.glEnableVertexAttribArray(NORMAL);
+		shaderTerreno.carregarLuminosidadeEspecular(new Especular());
+		bindTexturas(terreno);
 		
-		Textura textura = terreno.getTextura();
-		shaderTerreno.carregarLuminosidadeEspecular(textura.getReflexo());
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, terreno.getTextura().getTexturaID());
 	}
 	
 	public void transformarTerreno(Terreno terreno){
 		
 		shaderTerreno.carregarMatrizDeTransformacao(terreno);
+	}
+	
+	public void bindTexturas(Terreno terreno){
+		
+		PacoteDeTexturaDeTerreno texturas = terreno.getTexturas();
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturas.getTexturaVermelha().getTexturaID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturas.getTexturaVerde().getTexturaID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE2);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturas.getTexturaAzul().getTexturaID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE3);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturas.getTexturaPreta().getTexturaID());
+		GL13.glActiveTexture(GL13.GL_TEXTURE4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, terreno.getTexturaDeMistura().getTexturaID());
+		
 	}
 	
 	public void unbindTerreno(){

@@ -12,7 +12,7 @@ import entidades.Entidade;
 import luminosidades.Difusa;
 import objetos.ObjetoComTextura;
 import shaders.ShaderTerreno;
-import shaders.StaticShader;
+import shaders.ShaderEntidade;
 import terrenos.Terreno;
 
 public class Renderizador {
@@ -22,7 +22,7 @@ public class Renderizador {
 	private static final float AZUL = 1;
 	private static final float ALPHA = 1;
 	
-	private StaticShader shader = new StaticShader();
+	private ShaderEntidade shader = new ShaderEntidade();
 	private ShaderTerreno shaderTerreno = new ShaderTerreno();
 	private RenderizadorDeObjetos renderizador = new RenderizadorDeObjetos(shader);
 	private RenderizadorDeTerrenos renderizadorTerreno = new RenderizadorDeTerrenos(shaderTerreno);

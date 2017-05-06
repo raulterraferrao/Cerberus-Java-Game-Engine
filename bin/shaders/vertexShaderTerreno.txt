@@ -39,7 +39,7 @@ void main(void){
 	
 	//O vertexshader não pode lidar com a textura já que ele lida somente com os vertices e não com o que está entre os vertices.
 	
-	vetorTextura = coordenadasDaTextura * 40;
+	vetorTextura = coordenadasDaTextura;
 	
 
 	normalDaSuperficie = (matrizDeTransformacao * vec4(normais,0.0)).xyz;

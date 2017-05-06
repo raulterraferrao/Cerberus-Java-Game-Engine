@@ -12,8 +12,8 @@ import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
-import shaders.StaticShader;
-import texturas.Textura;
+import shaders.ShaderEntidade;
+import texturas.TexturaDeEntidade;
 
 public class RenderizadorDeObjetos {
 	
@@ -23,9 +23,9 @@ public class RenderizadorDeObjetos {
 	private static final int TEXTURA = 1;
 	private static final int NORMAL = 2;
 	
-	private StaticShader shader;
+	private ShaderEntidade shader;
 	    
-	public RenderizadorDeObjetos(StaticShader shader){
+	public RenderizadorDeObjetos(ShaderEntidade shader){
 		this.shader = shader;
 		shader.iniciarPrograma();
 		shader.carregarMatrizDeProjecao();
@@ -55,7 +55,7 @@ public class RenderizadorDeObjetos {
 		GL20.glEnableVertexAttribArray(TEXTURA);
 		GL20.glEnableVertexAttribArray(NORMAL);
 		
-		Textura textura = modelo.getTextura();
+		TexturaDeEntidade textura = modelo.getTextura();
 		if(textura.isTransparente()){
 			Renderizador.desabilitarCullFace();
 		}
@@ -79,7 +79,7 @@ public class RenderizadorDeObjetos {
 		GL30.glBindVertexArray(UNBIND);
 	}
 	
-	public void renderizar(Entidade entidade, StaticShader shader) {
+	public void renderizar(Entidade entidade, ShaderEntidade shader) {
 
 		
 		ObjetoComTextura objComTextura = entidade.getObjetoComTextura();
@@ -98,7 +98,7 @@ public class RenderizadorDeObjetos {
 
 		//Carregar iluminosidade Especular
 		
-		Textura textura = objComTextura.getTextura();
+		TexturaDeEntidade textura = objComTextura.getTextura();
 		shader.carregarLuminosidadeEspecular(textura.getReflexo());
 		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
