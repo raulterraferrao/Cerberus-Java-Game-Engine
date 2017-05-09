@@ -5,6 +5,10 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.PixelFormat;
+
+import entradas.MeuMouse;
+import entradas.MeuTeclado;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -58,7 +62,8 @@ public class GerenciadorDeJanela {
 	public static void atualizarDisplay(){
 		GerenciadorDeTempo.atualizarDelta();		
 		GerenciadorDeTempo.atualizarFPS();
-
+		MeuTeclado.tick();
+		MeuMouse.tick();
 		//Limita a Quantidade de fps no qual a engine irá rodar
 		Display.sync(FPS);
 		//Atualiza o nosso Display

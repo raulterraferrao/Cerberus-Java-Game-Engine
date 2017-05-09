@@ -1,7 +1,7 @@
 package shaders;
 
 
-import entidades.Camera;
+import cameras.Camera;
 import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
 import estruturasDeDados.Vetor3f;

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 
-import entidades.Camera;
+import cameras.Camera;
 import entidades.Entidade;
 import luminosidades.Difusa;
 import objetos.ObjetoComTextura;

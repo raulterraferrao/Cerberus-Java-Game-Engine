@@ -7,7 +7,9 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import entidades.Camera;
+
+import cameras.Camera;
+import cameras.CameraTerceiraPessoa;
 import entidades.Entidade;
 import entidades.Jogador;
 import entradas.MeuMouse;
@@ -29,15 +31,17 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		//Preparações iniciais 
+		//==========================SETUP=========================//
+		
 		GerenciadorDeJanela.criarDisplay();
 		
-		Camera camera = new Camera();
+		Renderizador renderizador = new Renderizador();
 		
 		Difusa luz = new Difusa(new Vetor3f(0,40,0),new Vetor3f(1,1,1));
 		
 		GerenciadorDeObjetos gerenciadorDeobj = new GerenciadorDeObjetos();
-		 
+		//=========================OBJETOS========================//
+		
 		//Carrego o modelo do Objeto de uma fonte externa(e.g Blender)
 		
 		Objeto modeloDragao = CarregarObjeto.carregarObjeto("dragon",gerenciadorDeobj);
@@ -62,8 +66,6 @@ public class Main {
 		
 		PacoteDeTexturaDeTerreno pacoteDeTextura = new PacoteDeTexturaDeTerreno(texturaDeserto, texturaGramaComFlor, texturaCaminho, texturaGrama);	
 		
-		//==========================================================//
-		
 		//Coloco o quanto a superficie da textura é reflexiva
 		
 		texturaDragao.setReflexo(10,1);
@@ -75,6 +77,8 @@ public class Main {
 		//Coloca se a textura precisa de uma iluminosidade Falsa
 		
 		texturaPlanta.setIluminosidadeFalsa(true);
+		
+		//=======================ENTIDADES=========================//
 		
 		//Faço a conexão entre o Modelo do Objeto e a Textura dele
 		
@@ -88,74 +92,71 @@ public class Main {
 		List<Entidade> capinzal = new ArrayList<Entidade>();
 		Random aleatorio = new Random();
 		
-		for(int i = 0; i < 100 ; i++){
+		for(int i = 0; i < 40 ; i++){
 			
-			float x = aleatorio.nextFloat()*100 - 50;
+			float x = aleatorio.nextFloat()*1000 - 500;
 			float y = 0;
-			float z = aleatorio.nextFloat() * - 1000 -20;
+			float z = aleatorio.nextFloat() *1000 - 500;
 			
 			capinzal.add(new Entidade(objetoPlanta,new Vetor3f((x+30), y, (z-15)),0f, 0f, 0f, 1f));
 			floresta.add(new Entidade(objetoArvore,new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
 		}
 		
-		Jogador dragao = new Jogador(objetoDragao,new Vetor3f(0, 0, -50), 0f, 0f, 0f, 1f);
+		Jogador dragao = new Jogador(objetoDragao,new Vetor3f(0, 0, -50), 0f, 180f, 0f, 1f);
 		Entidade planta = new Entidade(objetoPlanta,new Vetor3f(0, 0, -30), 0f, 0f, 0f, 1f);
 
-		//Criação de Terrenos
+		//=========================CAMERAS===========================//
+		
+		CameraTerceiraPessoa camera = new CameraTerceiraPessoa(dragao);
+		//Camera camera = new Camera();
+		
+		//=========================TERRENOS==========================//
 		
 		Terreno terreno1 = new Terreno(-1, -1, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
 		Terreno terreno2 = new Terreno(0, -1, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
-		//Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grass2")));
-		//Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grass3")));
-			
-		
-		Renderizador renderizador = new Renderizador();
-		
-		//Loop principal da Engine que contém a lógica do Jogo
+		Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
+		Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
+				
+		//=========================LOOP PRINCIPAL==========================//
 	
 		while(!Display.isCloseRequested() && !MeuTeclado.foiPressionada(Keyboard.KEY_ESCAPE)){
 												
+			//****************MOVER ENTIDADES****************//
+			
 			camera.mover();
 			dragao.mover();
 			
+			//****************RENDERIZAR ENTIDADES****************//
+			
 			renderizador.renderizar(luz, camera);
 			
-			//Renderizar Entidades
-			
 			for(Entidade aArvore : floresta){
-					renderizador.processarEntidades(aArvore);
+				renderizador.processarEntidades(aArvore);
 			}
 			for(Entidade aGrama : capinzal){
 				renderizador.processarEntidades(aGrama);
-		}
+			}
 			//dragao.aumentarRotacao(0, 2, 0);
 			renderizador.processarEntidades(dragao);
 			renderizador.processarEntidades(planta);
 			
-			//Renderizar Terrenos
 			
 			renderizador.processarTerrenos(terreno1);
 			renderizador.processarTerrenos(terreno2);
-			//renderizador.processarTerrenos(terreno3);
-			//renderizador.processarTerrenos(terreno4);
+			renderizador.processarTerrenos(terreno3);
+			renderizador.processarTerrenos(terreno4);
 			
-			MeuTeclado.tick();
-			MeuMouse.tick();
-			
-			if(MeuTeclado.foiPressionada(Keyboard.KEY_UP))
-				System.out.println("seta apertada");
-			if(MeuTeclado.foiSolta(Keyboard.KEY_UP))
-				System.out.println("seta solta");
-			if(MeuMouse.foiPressionado(0))
-				System.out.println("botao apertado hein" + MeuMouse.getMousePos().toString());
-			if(MeuMouse.foiSolto(0))
-				System.out.println("botao solto");
+			//****************ATUALIZAR DISPLAY****************//
 			
 			GerenciadorDeJanela.atualizarDisplay();
 		}		//Aqui somente será alcançado se fizermos uma requisição de fechar a janela
 
+		//======================DESALOCAR RECURSOS=======================//
+		
 		renderizador.desalocar();
 		gerenciadorDeobj.desalocar();
+		
+		//========================FECHAR DISPLAY=========================//
 
 		GerenciadorDeJanela.fecharDisplay();
 	}

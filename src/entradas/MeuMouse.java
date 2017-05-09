@@ -50,8 +50,26 @@ public class MeuMouse {
 		return botoesSoltos.contains(botao);
 	}
 	
-	public static Vetor2f getMousePos(){
+	public static Vetor2f getPosicao(){
 		
 		return new Vetor2f(Mouse.getX(), Mouse.getY());
 	}
+	
+	public static float getDeltaRodinha(){
+		return Mouse.getDWheel() * 0.1f;
+	}
+	
+	public static float getDeltaY(){
+		return Mouse.getDY() * 0.1f;
+	}
+	public static float getDeltaX(){
+		return Mouse.getDX() * 0.1f;
+	}
+	public static boolean isBotaoDireito(){
+		return Mouse.isButtonDown(1);
+	}
+	public static boolean isBotaoEsquerdo(){
+		return Mouse.isButtonDown(0);
+	}
+	
 }
