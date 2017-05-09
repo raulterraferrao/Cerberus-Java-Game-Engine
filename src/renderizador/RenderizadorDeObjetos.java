@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import entidades.Entidade;
-import estruturasDeDados.Matriz4f;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
 import shaders.ShaderEntidade;

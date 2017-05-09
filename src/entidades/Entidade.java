@@ -54,6 +54,25 @@ public class Entidade {
 	public void setPosicao(Vetor3f posicao) {
 		this.posicao = posicao;
 	}
+	public void setPosicaoX(float posX){
+		posicao.x = posX;
+	}
+	public void setPosicaoY(float posY){
+		posicao.y = posY;
+	}
+	public void setPosicaoZ(float posZ){
+		posicao.z = posZ;
+	}
+	public float getPosicaoX(){
+		return posicao.x;
+	}
+	public float getPosicaoY(){
+		return posicao.y;
+	}
+	public float getPosicaoZ(){
+		return posicao.z;
+	}
+	
 	public float getRotx() {
 		return rotx;
 	}

@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import entidades.Camera;
 import entidades.Entidade;
+import entidades.Jogador;
 import entradas.MeuMouse;
 import entradas.MeuTeclado;
 import estruturasDeDados.Vetor3f;
@@ -17,7 +18,6 @@ import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
 import renderizador.GerenciadorDeObjetos;
-import renderizador.GerenciadorDeTempo;
 import renderizador.Renderizador;
 import terrenos.Terreno;
 import renderizador.GerenciadorDeJanela;
@@ -98,7 +98,7 @@ public class Main {
 			floresta.add(new Entidade(objetoArvore,new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
 		}
 		
-		Entidade dragao = new Entidade(objetoDragao,new Vetor3f(0, 0, -50), 0f, 0f, 0f, 1f);
+		Jogador dragao = new Jogador(objetoDragao,new Vetor3f(0, 0, -50), 0f, 0f, 0f, 1f);
 		Entidade planta = new Entidade(objetoPlanta,new Vetor3f(0, 0, -30), 0f, 0f, 0f, 1f);
 
 		//Criação de Terrenos
@@ -107,22 +107,16 @@ public class Main {
 		Terreno terreno2 = new Terreno(0, -1, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura);
 		//Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grass2")));
 		//Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("grass3")));
-		
-		
-		//Utiliza-se o GerenciadorDeTempo para fazer a medição de FPS
-		
-		GerenciadorDeTempo.getDelta(); // inicar o Delta
-		GerenciadorDeTempo.setUltimoFPS(GerenciadorDeTempo.getTime());
+			
 		
 		Renderizador renderizador = new Renderizador();
 		
 		//Loop principal da Engine que contém a lógica do Jogo
 	
-		while(!Display.isCloseRequested()){
-			
-			GerenciadorDeTempo.atualizarFPS();						
-			
+		while(!Display.isCloseRequested() && !MeuTeclado.foiPressionada(Keyboard.KEY_ESCAPE)){
+												
 			camera.mover();
+			dragao.mover();
 			
 			renderizador.renderizar(luz, camera);
 			
@@ -134,7 +128,7 @@ public class Main {
 			for(Entidade aGrama : capinzal){
 				renderizador.processarEntidades(aGrama);
 		}
-			dragao.aumentarRotacao(0, 2, 0);
+			//dragao.aumentarRotacao(0, 2, 0);
 			renderizador.processarEntidades(dragao);
 			renderizador.processarEntidades(planta);
 			
@@ -145,8 +139,6 @@ public class Main {
 			//renderizador.processarTerrenos(terreno3);
 			//renderizador.processarTerrenos(terreno4);
 			
-			
-
 			MeuTeclado.tick();
 			MeuMouse.tick();
 			

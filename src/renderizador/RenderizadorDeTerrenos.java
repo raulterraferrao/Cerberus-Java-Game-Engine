@@ -1,7 +1,6 @@
 package renderizador;
 
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -13,7 +12,6 @@ import objetos.Objeto;
 import shaders.ShaderTerreno;
 import terrenos.Terreno;
 import texturas.PacoteDeTexturaDeTerreno;
-import texturas.TexturaDeEntidade;
 
 public class RenderizadorDeTerrenos {
 

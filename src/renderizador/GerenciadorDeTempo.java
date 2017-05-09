@@ -8,25 +8,32 @@ public class GerenciadorDeTempo {
 	private static long ultimoFrame;
 	private static int fps;
 	private static long ultimoFPS;
+	private static float delta;
 
+	public static void iniciar(){
+		ultimoFrame = getTempoAtual();
+	}
+	
 	public static void atualizarFPS() {
-	    if (getTime() - ultimoFPS > 1000) {
-	        Display.setTitle("FPS: " + fps); 
+	    if (getTempoAtual() - ultimoFPS > 1000) {
+	    	Display.setTitle("FPS: " + getFps()); 
 	        fps = 0; //reset the FPS counter
 	        ultimoFPS += 1000; //add one second
 	    }
+	    ultimoFrame = getTempoAtual();
 	    fps++;
 	}
 	
-	public static long getTime() {
+	public static long getTempoAtual() {
 	    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 	
-    public static int getDelta() {
-        long tempo = getTime();
-        int delta = (int) (tempo - ultimoFrame);
-        ultimoFrame = tempo;
-      
+    public static void atualizarDelta() {
+        long tempo = getTempoAtual();
+        delta = (tempo - ultimoFrame)/1000f;
+    }
+    
+    public static float getDelta() {
         return delta;
     }
 

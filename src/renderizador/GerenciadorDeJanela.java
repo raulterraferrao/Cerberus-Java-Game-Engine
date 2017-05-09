@@ -47,10 +47,18 @@ public class GerenciadorDeJanela {
 			e.printStackTrace();
 		}
 		
+		//Utiliza-se o GerenciadorDeTempo para fazer a medição de FPS
+		
+		GerenciadorDeTempo.iniciar(); // inicar o Delta
+		GerenciadorDeTempo.setUltimoFPS(GerenciadorDeTempo.getTempoAtual());
+		
 		
 	}
 	//A cada passo esse metodo atualizará a janela na qual rodamos nossa engine
 	public static void atualizarDisplay(){
+		GerenciadorDeTempo.atualizarDelta();		
+		GerenciadorDeTempo.atualizarFPS();
+
 		//Limita a Quantidade de fps no qual a engine irá rodar
 		Display.sync(FPS);
 		//Atualiza o nosso Display
