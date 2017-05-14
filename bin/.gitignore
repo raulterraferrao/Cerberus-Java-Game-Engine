@@ -1,7 +1,12 @@
+/cameras/
 /entidades/
 /entradas/
+/estruturasDeDados/
 /executador/
-/renderizador/
-/cameras/
+/luminosidades/
 /matrizesDeTransformacao/
+/objetos/
+/renderizador/
 /shaders/
+/terrenos/
+/texturas/

@@ -6,7 +6,7 @@ import estruturasDeDados.Vetor3f;
 
 public class Camera {
 
-	Vetor3f posicao = new Vetor3f(0,10,0);
+	Vetor3f posicao = new Vetor3f(0,40,0);
 	float pitch = 20;
 	float yaw = 0;
 	float roll;

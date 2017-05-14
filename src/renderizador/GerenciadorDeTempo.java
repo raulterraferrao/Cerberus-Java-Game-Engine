@@ -1,7 +1,6 @@
 package renderizador;
 
 import org.lwjgl.Sys;
-import org.lwjgl.opengl.Display;
 
 public class GerenciadorDeTempo {
 	
@@ -16,7 +15,7 @@ public class GerenciadorDeTempo {
 	
 	public static void atualizarFPS() {
 	    if (getTempoAtual() - ultimoFPS > 1000) {
-	    	Display.setTitle("FPS: " + getFps()); 
+	    	//System.out.println(getFps());
 	        fps = 0; //reset the FPS counter
 	        ultimoFPS += 1000; //add one second
 	    }
