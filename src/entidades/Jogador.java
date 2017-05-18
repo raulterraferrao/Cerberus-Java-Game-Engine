@@ -6,6 +6,7 @@ import entradas.MeuTeclado;
 import estruturasDeDados.Vetor3f;
 import objetos.ObjetoComTextura;
 import renderizador.GerenciadorDeTempo;
+import terrenos.Terreno;
 
 public class Jogador extends Entidade{
 	
@@ -44,7 +45,7 @@ public class Jogador extends Entidade{
 		this.pulo = pulo;
 }
 	
-	public void mover(){
+	public void mover(Terreno terreno){
 		float delta = GerenciadorDeTempo.getDelta();
 		entradas();
 		aumentarRotacao(0, rotacionar * delta, 0);
@@ -57,10 +58,11 @@ public class Jogador extends Entidade{
 		aumentarPosicao(distanciaX, 0, distanciaZ);
 		velocidadeY += gravidade * delta;
 		aumentarPosicao(0,velocidadeY * delta,0);
-		if(getPosicaoY() < ALTURA_TERRENO){
+		float altura = terreno.getAlturaDoTerreno(this.getPosicaoX(), this.getPosicaoZ());
+		if(getPosicaoY() < altura){
 			velocidadeY = 0;
 			estouNoChao = true;
-			setPosicaoY(ALTURA_TERRENO);
+			setPosicaoY(altura);
 		}
 		
 	}

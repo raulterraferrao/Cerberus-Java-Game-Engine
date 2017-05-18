@@ -1,5 +1,6 @@
 package cameras;
 
+import entidades.Entidade;
 import entidades.Jogador;
 import entradas.MeuMouse;
 
@@ -13,6 +14,10 @@ public class CameraTerceiraPessoa extends Camera{
 		
 		public CameraTerceiraPessoa(Jogador jogador){
 			this.jogador = jogador;
+		}
+		
+		public CameraTerceiraPessoa(Entidade jogador){
+			this.jogador = (Jogador) jogador;
 		}
 		
 		public void mover(){
@@ -36,6 +41,13 @@ public class CameraTerceiraPessoa extends Camera{
 				super.pitch -= mudarAnguloVertical * sensitividade;
 			}
 		}
+
+		private void calcularAnguloHorizontal(){
+			if(MeuMouse.isBotaoEsquerdo()){
+				float mudarAnguloHorizontal = MeuMouse.getDeltaX(); 
+				anguloEmVoltaDoJogador -= mudarAnguloHorizontal * sensitividade;
+			}
+		}
 		
 		private void calcularPosicaoDaCamera(float distanciaHorizontal, float distanciaVertical){
 			float anguloTeta = jogador.getRoty() + anguloEmVoltaDoJogador;
@@ -47,12 +59,7 @@ public class CameraTerceiraPessoa extends Camera{
 		}
 		
 		
-		private void calcularAnguloHorizontal(){
-			if(MeuMouse.isBotaoEsquerdo()){
-				float mudarAnguloHorizontal = MeuMouse.getDeltaX(); 
-				anguloEmVoltaDoJogador -= mudarAnguloHorizontal * sensitividade;
-			}
-		}
+
 		
 		private float calcularDistanciaHorizontal(){
 			return (float) (distanciaDoJogador * Math.cos(Math.toRadians(super.pitch)));
