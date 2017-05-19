@@ -15,6 +15,8 @@ uniform mat4 matrizDeProjecao;
 uniform mat4 matrizDeVisualizacao;
 uniform vec3 posicaoDaLuz;
 uniform float iluminosidadeFalsa;
+uniform float quantidadeDeLinhas;
+uniform vec2 offset;
 
 const float densidade = 0.0035;
 const float gradiente = 5.0;
@@ -42,7 +44,7 @@ void main(void){
 	
 	//O vertexshader não pode lidar com a textura já que ele lida somente com os vertices e não com o que está entre os vertices.
 	
-	vetorTextura = coordenadasDaTextura;
+	vetorTextura = (coordenadasDaTextura / quantidadeDeLinhas) + offset;
 	
 	if(iluminosidadeFalsa > 0.5){
 		normalDaSuperficie = vec3(0.0,1.0,0.0);

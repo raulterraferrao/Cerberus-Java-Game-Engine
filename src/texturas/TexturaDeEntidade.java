@@ -9,6 +9,8 @@ public class TexturaDeEntidade {
 	private boolean transparente = false;
 	private boolean iluminosidadeFalsa = false;
 	
+	private int quantidadeDeLinhas = 1;
+	
 	public TexturaDeEntidade(int texturaID){
 		this.texturaID = texturaID;
 	}
@@ -44,5 +46,13 @@ public class TexturaDeEntidade {
 
 	public void setIluminosidadeFalsa(boolean iluminosidadeFalse) {
 		this.iluminosidadeFalsa = iluminosidadeFalse;
+	}
+
+	public int getQuantidadeDeLinhas() {
+		return quantidadeDeLinhas;
+	}
+
+	public void setQuantidadeDeLinhas(int quantidadeDeLinhas) {
+		this.quantidadeDeLinhas = quantidadeDeLinhas;
 	}
 }

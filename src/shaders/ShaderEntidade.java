@@ -4,6 +4,7 @@ package shaders;
 import cameras.Camera;
 import entidades.Entidade;
 import estruturasDeDados.Matriz4f;
+import estruturasDeDados.Vetor2f;
 import estruturasDeDados.Vetor3f;
 import luminosidades.Difusa;
 import luminosidades.Especular;
@@ -30,6 +31,8 @@ public class ShaderEntidade extends ProgramaShaderPadrao {
 	private int localidade_Reflexividade;
 	private int localidade_IluminosidadeFalsa;
 	private int localidade_CorDoCeu;
+	private int localidade_QuantidadeDeLinhas;
+	private int localidade_Offset;
 	
 	public ShaderEntidade() {
 		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
@@ -56,6 +59,8 @@ public class ShaderEntidade extends ProgramaShaderPadrao {
 		localidade_Reflexividade = super.getLocalidadeUniform("reflexividade");
 		localidade_IluminosidadeFalsa = super.getLocalidadeUniform("iluminosidadeFalsa");
 		localidade_CorDoCeu = super.getLocalidadeUniform("corDoCeu");
+		localidade_QuantidadeDeLinhas = super.getLocalidadeUniform("quantidadeDeLinhas");
+		localidade_Offset = super.getLocalidadeUniform("offset");
 	}
 	
 	public void carregarMatrizDeTransformacao(Entidade entidade){
@@ -94,5 +99,11 @@ public class ShaderEntidade extends ProgramaShaderPadrao {
 	public void carregarCorDoCeu(float vermelho, float verde, float azul){
 		super.carregarVetor3f(localidade_CorDoCeu, new Vetor3f(vermelho, verde, azul));
 	}
-
+	
+	public void carregarOffset(float offsetX, float offsetY){
+		super.carregarVetor2f(localidade_Offset, new Vetor2f(offsetX, offsetY));
+	}
+	public void carregarQtdLinhas(int linhas){
+		super.carregarFloat(localidade_QuantidadeDeLinhas, linhas);
+	}
 }

@@ -55,6 +55,7 @@ public class RenderizadorDeObjetos {
 		GL20.glEnableVertexAttribArray(NORMAL);
 		
 		TexturaDeEntidade textura = modelo.getTextura();
+		shader.carregarQtdLinhas(textura.getQuantidadeDeLinhas());
 		if(textura.isTransparente()){
 			Renderizador.desabilitarCullFace();
 		}
@@ -67,6 +68,7 @@ public class RenderizadorDeObjetos {
 	public void prepararInstancia(Entidade entidade){
 		
 		shader.carregarMatrizDeTransformacao(entidade);
+		shader.carregarOffset(entidade.getOffSetXTextura(), entidade.getOffSetYTextura());
 	}
 	
 	public void unbindModeloDeTextura(){

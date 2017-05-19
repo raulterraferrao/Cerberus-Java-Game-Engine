@@ -18,7 +18,8 @@ public class Terreno {
 	private static final String LOCAL = "img/";
 	private static final String EXTENSAO = ".png";
 	
-	private static final int TAMANHO = 1200;
+	private static final int TAMANHO = 1000;
+
 	private static final int ALTURA_MAX = 40;
 	private static final int COR_MAX = 256 * 256 * 256;
 	
@@ -214,6 +215,10 @@ public class Terreno {
 		this.modelo = modelo;
 	}
 	
+	public static int getTamanho() {
+		return TAMANHO;
+	}
+
 	
 	
 }

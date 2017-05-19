@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 import estruturasDeDados.Matriz4f;
+import estruturasDeDados.Vetor2f;
 import estruturasDeDados.Vetor3f;
 /***
  * Essa � uma classe abstrata que retrata o que todo Shader precisa ter
@@ -111,6 +112,11 @@ public abstract class ProgramaShaderPadrao {
 	protected void carregarVetor3f(int localidade,Vetor3f vetor){
 		GL20.glUniform3f(localidade, vetor.x, vetor.y, vetor.z);
 	}
+	
+	protected void carregarVetor2f(int localidade,Vetor2f vetor){
+		GL20.glUniform2f(localidade, vetor.x, vetor.y);
+	}
+	
 	protected void carregarBooleano(int localidade,boolean bool){
 		float valor = 0;
 		if(bool){

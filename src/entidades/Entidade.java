@@ -11,6 +11,7 @@ public class Entidade {
 	private Vetor3f posicao;
 	private float rotx,roty,rotz;
 	private float escala;
+	private int indiceDaTextura = 0;
 	/***
 	 *  Classe responsável em criar as entidades no game, ela contém o modelo do objeto e as suas respectivas posições,rotação e escala.
 	 * @param objetoComTextura
@@ -27,6 +28,29 @@ public class Entidade {
 		this.roty = roty;
 		this.rotz = rotz;
 		this.escala = escala;
+	}
+	
+	public Entidade(ObjetoComTextura objetoComTextura, int indiceDaTextura, Vetor3f posicao, float rotx, float roty, float rotz, float escala) {
+		this.objetoComTextura = objetoComTextura;
+		this.posicao = posicao;
+		this.rotx = rotx;
+		this.roty = roty;
+		this.rotz = rotz;
+		this.escala = escala;
+		this.indiceDaTextura = indiceDaTextura;
+	}
+	
+	public float getOffSetXTextura(){
+		float qtdLinha = objetoComTextura.getTextura().getQuantidadeDeLinhas();
+		float coluna = (indiceDaTextura % qtdLinha);
+		return coluna / qtdLinha;
+		
+	}
+	
+	public float getOffSetYTextura(){
+		float qtdLinha = objetoComTextura.getTextura().getQuantidadeDeLinhas();
+		float linha = (indiceDaTextura / qtdLinha);
+		return linha / qtdLinha;
 	}
 	
 	public void aumentarPosicao(float posX,float posY,float posZ){

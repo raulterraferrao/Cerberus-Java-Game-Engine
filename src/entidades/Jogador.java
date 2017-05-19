@@ -10,7 +10,7 @@ import terrenos.Terreno;
 
 public class Jogador extends Entidade{
 	
-	private int velocidadeDeMovimento = 20;
+	private int velocidadeDeMovimento = 80;
 	private int velocidadeDeRotacao = 160;
 	private float gravidade = -50;
 	private float velocidadeY = 0;
@@ -19,7 +19,6 @@ public class Jogador extends Entidade{
 	private float movimentar = 0;
 	private boolean estouNoChao = true;
 	
-	private final float ALTURA_TERRENO = 0f;
 
 	public Jogador(ObjetoComTextura objetoComTextura, Vetor3f posicao, float rotx, float roty,
 			float rotz, float escala) {

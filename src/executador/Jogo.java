@@ -48,7 +48,7 @@ public class Jogo {
 		//Carrego o modelo do Objeto de uma fonte externa(e.g Blender)
 		
 		Objeto modeloDragao = CarregarObjeto.carregarObjeto("bunny",gerenciadorDeobj);
-		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("pine",gerenciadorDeobj);
+		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("planta",gerenciadorDeobj);
 		Objeto modeloCapim = CarregarObjeto.carregarObjeto("grassModel",gerenciadorDeobj);
 		Objeto modeloArvore = CarregarObjeto.carregarObjeto("lowPolyTree", gerenciadorDeobj);
 		
@@ -57,7 +57,7 @@ public class Jogo {
 		//Carrego a textura do Objeto de uma fonte externa(Deve ser .png)
 		
 		TexturaDeEntidade texturaDragao = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("dragonTexture"));
-		TexturaDeEntidade texturaPlanta = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("pine"));
+		TexturaDeEntidade texturaPlanta = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("planta"));
 		TexturaDeEntidade texturaCapim = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("capim"));
 		TexturaDeEntidade texturaArvore = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("lowPolyTree"));
 		
@@ -69,7 +69,7 @@ public class Jogo {
 		TexturaDeTerreno texturaCaminho =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("caminho"));
 		TexturaDeTerreno texturaDeMistura = new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("mistura"));
 		
-		PacoteDeTexturaDeTerreno pacoteDeTextura = new PacoteDeTexturaDeTerreno(texturaDeserto, texturaGramaComFlor, texturaCaminho, texturaGrama);	
+		PacoteDeTexturaDeTerreno pacoteDeTextura = new PacoteDeTexturaDeTerreno(texturaDeserto, texturaGrama, texturaCaminho, texturaGramaComFlor);	
 		
 		//Coloco o quanto a superficie da textura é reflexiva
 		
@@ -83,6 +83,10 @@ public class Jogo {
 		
 		//texturaPlanta.setIluminosidadeFalsa(true);
 		texturaCapim.setIluminosidadeFalsa(true);
+		//texturaPlanta.setIluminosidadeFalsa(true);
+		
+		//Coloco se a textura é dividida em grids de texturas
+		texturaPlanta.setQuantidadeDeLinhas(2);
 		
 		//=========================TERRENOS==========================//
 		
@@ -105,21 +109,30 @@ public class Jogo {
 		
 		List<Entidade> floresta = new ArrayList<Entidade>();
 		List<Entidade> capinzal = new ArrayList<Entidade>();
+		List<Entidade> plantio = new ArrayList<Entidade>();
 		Random aleatorio = new Random();
 		
 		for(int i = 0; i < 40 ; i++){
 			
-			float x = aleatorio.nextFloat()*1000;
-			float z = aleatorio.nextFloat() *1000 - 500;
+			float x = terreno1.getX() + aleatorio.nextFloat() * Terreno.getTamanho();
+			float z = terreno1.getZ() + aleatorio.nextFloat() * Terreno.getTamanho();
 			float y = terreno1.getAlturaDoTerreno(x, z);
 			
 			capinzal.add(new Entidade(objetoCapim,new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
 			floresta.add(new Entidade(objetoArvore,new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
 		}
+		for(int i = 0; i < 80 ; i++){
+			
+			float x = terreno1.getX() + aleatorio.nextFloat() * Terreno.getTamanho();
+			float z = terreno1.getZ() + aleatorio.nextFloat() * Terreno.getTamanho();
+			float y = terreno1.getAlturaDoTerreno(x, z);
+			
+			plantio.add(new Entidade(objetoPlanta,aleatorio.nextInt(4),new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
+		}
 		
 		Jogador dragao = new Jogador(objetoDragao,new Vetor3f(20, 0, -50), 0f, 0f, 0f, 1f);
-		Entidade planta = new Entidade(objetoPlanta,new Vetor3f(0, terreno1.getAlturaDoTerreno(0, -30), -30), 0f, 0f, 0f, 2f);
-
+		
+		
 		//=========================CAMERAS===========================//
 		
 		CameraTerceiraPessoa camera = new CameraTerceiraPessoa(dragao);
@@ -148,9 +161,11 @@ public class Jogo {
 			for(Entidade aGrama : capinzal){
 				renderizador.processarEntidades(aGrama);
 			}
+			for(Entidade aPlanta : plantio){
+				renderizador.processarEntidades(aPlanta);
+			}
 			//dragao.aumentarRotacao(0, 2, 0);
 			renderizador.processarEntidades(dragao);
-			renderizador.processarEntidades(planta);
 			
 			
 			renderizador.processarTerrenos(terreno1);
