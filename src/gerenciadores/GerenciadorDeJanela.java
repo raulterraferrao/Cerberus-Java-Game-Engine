@@ -1,4 +1,4 @@
-package renderizador;
+package gerenciadores;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;

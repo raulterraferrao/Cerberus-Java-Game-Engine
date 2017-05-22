@@ -1,4 +1,4 @@
-package renderizador;
+package gerenciadores;
 
 import org.lwjgl.Sys;
 

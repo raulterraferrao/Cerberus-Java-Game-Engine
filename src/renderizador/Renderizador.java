@@ -9,10 +9,13 @@ import org.lwjgl.opengl.GL11;
 
 import cameras.Camera;
 import entidades.Entidade;
+import gerenciadores.GerenciadorDeObjetos;
+import gui.TexturaGUI;
 import luminosidades.Difusa;
 import objetos.ObjetoComTextura;
 import shaders.ShaderTerreno;
 import shaders.ShaderEntidade;
+import shaders.ShaderGUI;
 import terrenos.Terreno;
 
 public class Renderizador {
@@ -22,13 +25,17 @@ public class Renderizador {
 	private static final float AZUL = 1;
 	private static final float ALPHA = 1;
 	
+	private GerenciadorDeObjetos gerenciadorDeObj = new GerenciadorDeObjetos();
 	private ShaderEntidade shader = new ShaderEntidade();
 	private ShaderTerreno shaderTerreno = new ShaderTerreno();
-	private RenderizadorDeObjetos renderizador = new RenderizadorDeObjetos(shader);
+	private ShaderGUI shaderGUI = new ShaderGUI();
+	private RenderizadorDeObjetos renderizadorObjeto = new RenderizadorDeObjetos(shader);
 	private RenderizadorDeTerrenos renderizadorTerreno = new RenderizadorDeTerrenos(shaderTerreno);
+	private RenderizadorGUI renderizadorGUI = new RenderizadorGUI(shaderGUI, gerenciadorDeObj);
 	
 	private Map<ObjetoComTextura,List<Entidade>> entidades = new HashMap<ObjetoComTextura,List<Entidade>>();
 	private List<Terreno> terrenos = new ArrayList<Terreno>();
+	private List<TexturaGUI> guis = new ArrayList<TexturaGUI>();
 	
 	public void renderizar(Difusa sol, Camera camera){
 
@@ -40,7 +47,7 @@ public class Renderizador {
 		shader.carregarLuminosidadeDifusa(sol);
 		shader.carregarMatrizDeVisualizacao(camera);
 		shader.carregarCorDoCeu(VERMELHO, VERDE, AZUL);
-		renderizador.renderizar(entidades);
+		renderizadorObjeto.renderizar(entidades);
 		shader.fecharPrograma();
 		
 		shaderTerreno.iniciarPrograma();
@@ -50,6 +57,12 @@ public class Renderizador {
 		renderizadorTerreno.renderizar(terrenos);
 		shaderTerreno.fecharPrograma();
 		
+		shaderGUI.iniciarPrograma();
+		renderizadorGUI.renderizar(guis);
+		shaderGUI.fecharPrograma();
+		
+		
+		guis.clear();
 		terrenos.clear();
 		entidades.clear();
 	}
@@ -68,6 +81,10 @@ public class Renderizador {
 			novoLote.add(entidade);
 			entidades.put(obj, novoLote);
 		}
+	}
+	
+	public void processarGUI(TexturaGUI gui){
+		guis.add(gui);
 	}
 	
 	public void desalocar(){

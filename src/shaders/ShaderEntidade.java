@@ -15,8 +15,8 @@ import texturas.TexturaDeEntidade;
 
 public class ShaderEntidade extends ProgramaShaderPadrao {
 
-	private static final String ARQUIVO_VERTEX = "src/shaders/vertexShader.txt";
-	private static final String ARQUIVO_FRAGMENT = "src/shaders/fragmentShader.txt";
+	private static final String ARQUIVO_VERTEX = "src/glsl/vertexShaderEntidade.glsl";
+	private static final String ARQUIVO_FRAGMENT = "src/glsl/fragmentShaderEntidade.glsl";
 	
 	private static final int POSICAO = 0;
 	private static final int TEXTURA = 1;

@@ -12,8 +12,8 @@ import terrenos.Terreno;
 
 public class ShaderTerreno extends ProgramaShaderPadrao{
 	
-	private static final String ARQUIVO_VERTEX = "src/shaders/vertexShaderTerreno.txt";
-	private static final String ARQUIVO_FRAGMENT = "src/shaders/fragmentShaderTerreno.txt";
+	private static final String ARQUIVO_VERTEX = "src/glsl/vertexShaderTerreno.glsl";
+	private static final String ARQUIVO_FRAGMENT = "src/glsl/fragmentShaderTerreno.glsl";
 	
 	private static final int POSICAO = 0;
 	private static final int TEXTURA = 1;

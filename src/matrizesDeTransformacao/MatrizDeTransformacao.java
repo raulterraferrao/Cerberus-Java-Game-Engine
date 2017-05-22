@@ -1,6 +1,7 @@
 package matrizesDeTransformacao;
 
 import estruturasDeDados.Matriz4f;
+import estruturasDeDados.Vetor2f;
 import estruturasDeDados.Vetor3f;
 
 public class MatrizDeTransformacao {
@@ -22,6 +23,14 @@ public class MatrizDeTransformacao {
 		Matriz4f.rotacionar((float) Math.toRadians(rz),new Vetor3f(0,0,1), matrizDeTransformacao, matrizDeTransformacao);
 		Matriz4f.escalar(new Vetor3f(escala,escala,escala),matrizDeTransformacao,matrizDeTransformacao);
 		
+		return matrizDeTransformacao;
+	}
+	
+	public static Matriz4f criarMatrizDeTransformacao(Vetor2f posicao, Vetor2f escala) {
+		Matriz4f matrizDeTransformacao = new Matriz4f();
+		matrizDeTransformacao.setIdentidade();
+		Matriz4f.transladar(posicao, matrizDeTransformacao,matrizDeTransformacao);
+		Matriz4f.escalar(new Vetor3f(escala.x, escala.y, 1f), matrizDeTransformacao, matrizDeTransformacao);
 		return matrizDeTransformacao;
 	}
 }

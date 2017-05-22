@@ -127,6 +127,18 @@ public class Matriz4f {
 		return dest;
 	}
 	
+	public static Matriz4f transladar(Vetor2f vec, Matriz4f src, Matriz4f dest) {
+		if (dest == null)
+			dest = new Matriz4f();
+
+		dest.m30 += src.m00 * vec.x + src.m10 * vec.y;
+		dest.m31 += src.m01 * vec.x + src.m11 * vec.y;
+		dest.m32 += src.m02 * vec.x + src.m12 * vec.y;
+		dest.m33 += src.m03 * vec.x + src.m13 * vec.y;
+
+		return dest;
+}
+	
 	public static Matriz4f rotacionar(float angulo, Vetor3f axis, Matriz4f src, Matriz4f dest) {
 		if (dest == null)
 			dest = new Matriz4f();

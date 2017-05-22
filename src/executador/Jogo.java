@@ -12,14 +12,17 @@ import cameras.CameraTerceiraPessoa;
 import entidades.Entidade;
 import entidades.Jogador;
 import entradas.MeuTeclado;
+import estruturasDeDados.Vetor2f;
 import estruturasDeDados.Vetor3f;
+import gerenciadores.GerenciadorDeJanela;
+import gerenciadores.GerenciadorDeObjetos;
+import gui.TexturaGUI;
 import luminosidades.Difusa;
 import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
-import renderizador.GerenciadorDeJanela;
-import renderizador.GerenciadorDeObjetos;
 import renderizador.Renderizador;
+import renderizador.RenderizadorGUI;
 import terrenos.Terreno;
 import texturas.PacoteDeTexturaDeTerreno;
 import texturas.TexturaDeEntidade;
@@ -40,34 +43,34 @@ public class Jogo {
 		
 		Difusa luz = new Difusa(new Vetor3f(100,400,200),COR_BRANCA);
 		
-		GerenciadorDeObjetos gerenciadorDeobj = new GerenciadorDeObjetos();
+		GerenciadorDeObjetos gerenciadorDeObj = new GerenciadorDeObjetos();
 	
 		
 		//=========================OBJETOS========================//
 		
 		//Carrego o modelo do Objeto de uma fonte externa(e.g Blender)
 		
-		Objeto modeloDragao = CarregarObjeto.carregarObjeto("bunny",gerenciadorDeobj);
-		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("planta",gerenciadorDeobj);
-		Objeto modeloCapim = CarregarObjeto.carregarObjeto("grassModel",gerenciadorDeobj);
-		Objeto modeloArvore = CarregarObjeto.carregarObjeto("lowPolyTree", gerenciadorDeobj);
+		Objeto modeloDragao = CarregarObjeto.carregarObjeto("bunny",gerenciadorDeObj);
+		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("planta",gerenciadorDeObj);
+		Objeto modeloCapim = CarregarObjeto.carregarObjeto("grassModel",gerenciadorDeObj);
+		Objeto modeloArvore = CarregarObjeto.carregarObjeto("lowPolyTree", gerenciadorDeObj);
 		
 		//=========================TEXTURAS========================//
 		
 		//Carrego a textura do Objeto de uma fonte externa(Deve ser .png)
 		
-		TexturaDeEntidade texturaDragao = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("dragonTexture"));
-		TexturaDeEntidade texturaPlanta = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("planta"));
-		TexturaDeEntidade texturaCapim = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("capim"));
-		TexturaDeEntidade texturaArvore = new TexturaDeEntidade(gerenciadorDeobj.carregarTextura("lowPolyTree"));
+		TexturaDeEntidade texturaDragao = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("dragonTexture"));
+		TexturaDeEntidade texturaPlanta = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("planta"));
+		TexturaDeEntidade texturaCapim = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("capim"));
+		TexturaDeEntidade texturaArvore = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("lowPolyTree"));
 		
 		//Carrego a textura do Terreno de uma fonte externa(Deve ser .png)
 		
-		TexturaDeTerreno texturaGrama =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("grass"));
-		TexturaDeTerreno texturaGramaComFlor =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("gramaComFlor"));
-		TexturaDeTerreno texturaDeserto =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("deserto"));
-		TexturaDeTerreno texturaCaminho =  new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("caminho"));
-		TexturaDeTerreno texturaDeMistura = new TexturaDeTerreno(gerenciadorDeobj.carregarTextura("mistura"));
+		TexturaDeTerreno texturaGrama =  new TexturaDeTerreno(gerenciadorDeObj.carregarTextura("grass"));
+		TexturaDeTerreno texturaGramaComFlor =  new TexturaDeTerreno(gerenciadorDeObj.carregarTextura("gramaComFlor"));
+		TexturaDeTerreno texturaDeserto =  new TexturaDeTerreno(gerenciadorDeObj.carregarTextura("deserto"));
+		TexturaDeTerreno texturaCaminho =  new TexturaDeTerreno(gerenciadorDeObj.carregarTextura("caminho"));
+		TexturaDeTerreno texturaDeMistura = new TexturaDeTerreno(gerenciadorDeObj.carregarTextura("mistura"));
 		
 		PacoteDeTexturaDeTerreno pacoteDeTextura = new PacoteDeTexturaDeTerreno(texturaDeserto, texturaGrama, texturaCaminho, texturaGramaComFlor);	
 		
@@ -90,7 +93,7 @@ public class Jogo {
 		
 		//=========================TERRENOS==========================//
 		
-		Terreno terreno1 = new Terreno(-0.5f,-0.5f , gerenciadorDeobj, pacoteDeTextura, texturaDeMistura, "mapaDeAltura1");
+		Terreno terreno1 = new Terreno(-0.5f,-0.5f , gerenciadorDeObj, pacoteDeTextura, texturaDeMistura, "mapaDeAltura1");
 		//Terreno terreno2 = new Terreno(0, -1, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura, "mapaDeAltura");
 		//Terreno terreno3 = new Terreno(-1, 0, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura, "mapaDeAltura");
 		//Terreno terreno4 = new Terreno(0, 0, gerenciadorDeobj, pacoteDeTextura, texturaDeMistura, "mapaDeAltura");
@@ -133,10 +136,25 @@ public class Jogo {
 		Jogador dragao = new Jogador(objetoDragao,new Vetor3f(20, 0, -50), 0f, 0f, 0f, 1f);
 		
 		
-		//=========================CAMERAS===========================//
+		//============================CAMERAS==============================//
 		
-		CameraTerceiraPessoa camera = new CameraTerceiraPessoa(dragao);
-		//Camera camera = new Camera();
+		//CameraTerceiraPessoa camera = new CameraTerceiraPessoa(dragao);
+		Camera camera = new Camera();
+		
+		
+		//==============================GUI================================//
+		
+		
+		List<TexturaGUI> guis = new ArrayList<TexturaGUI>();
+		//TexturaGUI gui = new TexturaGUI(new Vetor2f(0.5f, 0.5f), new Vetor2f (0.25f, 0.25f), 
+		//										gerenciadorDeObj.carregarTextura("health"));
+		TexturaGUI gui2 = new TexturaGUI(new Vetor2f(0.85f, 0.6f), new Vetor2f (0.3f, 0.3f), 
+												gerenciadorDeObj.carregarTextura("gta")); 
+		
+		guis.add(gui2);
+		//guis.add(gui);
+		
+
 		
 			
 		//=========================LOOP PRINCIPAL==========================//
@@ -164,14 +182,21 @@ public class Jogo {
 			for(Entidade aPlanta : plantio){
 				renderizador.processarEntidades(aPlanta);
 			}
-			//dragao.aumentarRotacao(0, 2, 0);
+			for(TexturaGUI aGUI : guis){
+				renderizador.processarGUI(aGUI);
+			}
+			
+			dragao.aumentarRotacao(0, 2, 0);
 			renderizador.processarEntidades(dragao);
+			
+
 			
 			
 			renderizador.processarTerrenos(terreno1);
 			//renderizador.processarTerrenos(terreno2);
 			//renderizador.processarTerrenos(terreno3);
 			//renderizador.processarTerrenos(terreno4);
+			
 			
 			//****************ATUALIZAR DISPLAY****************//
 			
@@ -181,7 +206,7 @@ public class Jogo {
 		//======================DESALOCAR RECURSOS=======================//
 		
 		renderizador.desalocar();
-		gerenciadorDeobj.desalocar();
+		gerenciadorDeObj.desalocar();
 		
 		//========================FECHAR DISPLAY=========================//
 

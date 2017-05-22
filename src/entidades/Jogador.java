@@ -4,8 +4,8 @@ import org.lwjgl.input.Keyboard;
 
 import entradas.MeuTeclado;
 import estruturasDeDados.Vetor3f;
+import gerenciadores.GerenciadorDeTempo;
 import objetos.ObjetoComTextura;
-import renderizador.GerenciadorDeTempo;
 import terrenos.Terreno;
 
 public class Jogador extends Entidade{

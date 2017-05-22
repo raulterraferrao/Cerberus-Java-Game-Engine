@@ -1,4 +1,4 @@
-package renderizador;
+package gerenciadores;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,6 +42,15 @@ public class GerenciadorDeObjetos {
 			
 			return new Objeto(vaoID,indices.length);
 			
+		}
+		
+		public Objeto carregarParaVAO(float[] vertices){
+			int vaoID = criarVAO();
+			carregarVBOParaVAO(POSICAO, 2, vertices);
+			unbindVAO();
+			
+			//Divide-se por 2 pelo fato de que repetimos os vertices
+			return new Objeto(vaoID, vertices.length/2);
 		}
 		
 		private int criarVAO(){

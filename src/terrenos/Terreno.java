@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 
 import estruturasDeDados.Vetor2f;
 import estruturasDeDados.Vetor3f;
+import gerenciadores.GerenciadorDeObjetos;
 import objetos.Objeto;
-import renderizador.GerenciadorDeObjetos;
 import texturas.PacoteDeTexturaDeTerreno;
 import texturas.TexturaDeTerreno;
 
