@@ -5,7 +5,7 @@ in vec2 coordenadasDaTextura;
 in vec3 normais;
 
 out vec2 vetorTextura;
-out vec3 vetorParaLuz;
+out vec3 vetorParaLuz[4];
 out vec3 normalDaSuperficie;
 out vec3 vetorParaCamera;
 out float visibilidade;
@@ -13,7 +13,7 @@ out float visibilidade;
 uniform mat4 matrizDeTransformacao;
 uniform mat4 matrizDeProjecao;
 uniform mat4 matrizDeVisualizacao;
-uniform vec3 posicaoDaLuz;
+uniform vec3 posicaoDaLuz[4];
 
 const float densidade = 0.0035;
 const float gradiente = 5.0;
@@ -43,8 +43,10 @@ void main(void){
 	
 
 	normalDaSuperficie = (matrizDeTransformacao * vec4(normais,0.0)).xyz;
-	vetorParaLuz = posicaoDaLuz - pos_mundo.xyz;
-	
+	int i;
+	for(i = 0; i < 4; i++){
+		vetorParaLuz[i] = posicaoDaLuz[i] - pos_mundo.xyz;
+	}
 	vetorParaCamera = pos_camera.xyz - pos_mundo.xyz;
 	
 	

@@ -98,6 +98,7 @@ public abstract class ProgramaShaderPadrao {
 		  GL20.glCompileShader(shaderID);
 		  if(GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS )== GL11.GL_FALSE){
 		   System.out.println(GL20.glGetShaderInfoLog(shaderID, 500));
+		   System.out.println(arquivo);
 		   System.err.println("Não pode compilar o arquivo shader!");
 		   System.exit(-1);
 		  }

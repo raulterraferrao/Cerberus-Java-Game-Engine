@@ -6,7 +6,7 @@ import estruturasDeDados.Vetor3f;
 
 public class Camera {
 
-	Vetor3f posicao = new Vetor3f(0,40,0);
+	Vetor3f posicao = new Vetor3f(0,40,40);
 	float pitch = 20;
 	float yaw = 0;
 	float roll;
@@ -17,16 +17,16 @@ public class Camera {
 	
 	public void mover(){
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-			posicao.z -= 0.2f;
+			posicao.z -= 0.6f;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-			posicao.z += 0.2f;
+			posicao.z += 0.6f;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-			posicao.x += 0.2f;
+			posicao.x += 0.6f;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-			posicao.x -= 0.2f;
+			posicao.x -= 0.6f;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_F)){
 			yaw += 0.60f; 

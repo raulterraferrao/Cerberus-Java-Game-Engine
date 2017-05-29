@@ -22,7 +22,6 @@ import objetos.CarregarObjeto;
 import objetos.Objeto;
 import objetos.ObjetoComTextura;
 import renderizador.Renderizador;
-import renderizador.RenderizadorGUI;
 import terrenos.Terreno;
 import texturas.PacoteDeTexturaDeTerreno;
 import texturas.TexturaDeEntidade;
@@ -34,6 +33,9 @@ public class Jogo {
 		//==========================MACROS=========================//
 		
 		final Vetor3f COR_BRANCA = new Vetor3f(1,1,1);
+		final Vetor3f COR_VERDE = new Vetor3f(0,2,0);
+		final Vetor3f COR_VERMELHA = new Vetor3f(2,0,0);
+		final Vetor3f COR_BRANCA_ESCURO = new Vetor3f(0.4f, 0.4f, 0.4f);
 				
 		//==========================SETUP=========================//
 		
@@ -41,11 +43,9 @@ public class Jogo {
 		
 		Renderizador renderizador = new Renderizador();
 		
-		Difusa luz = new Difusa(new Vetor3f(100,400,200),COR_BRANCA);
-		
 		GerenciadorDeObjetos gerenciadorDeObj = new GerenciadorDeObjetos();
 	
-		
+
 		//=========================OBJETOS========================//
 		
 		//Carrego o modelo do Objeto de uma fonte externa(e.g Blender)
@@ -54,6 +54,7 @@ public class Jogo {
 		Objeto modeloPlanta = CarregarObjeto.carregarObjeto("planta",gerenciadorDeObj);
 		Objeto modeloCapim = CarregarObjeto.carregarObjeto("grassModel",gerenciadorDeObj);
 		Objeto modeloArvore = CarregarObjeto.carregarObjeto("lowPolyTree", gerenciadorDeObj);
+		Objeto modeloPoste = CarregarObjeto.carregarObjeto("poste", gerenciadorDeObj);
 		
 		//=========================TEXTURAS========================//
 		
@@ -63,6 +64,7 @@ public class Jogo {
 		TexturaDeEntidade texturaPlanta = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("planta"));
 		TexturaDeEntidade texturaCapim = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("capim"));
 		TexturaDeEntidade texturaArvore = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("lowPolyTree"));
+		TexturaDeEntidade texturaPoste = new TexturaDeEntidade(gerenciadorDeObj.carregarTextura("poste"));
 		
 		//Carrego a textura do Terreno de uma fonte externa(Deve ser .png)
 		
@@ -86,6 +88,7 @@ public class Jogo {
 		
 		//texturaPlanta.setIluminosidadeFalsa(true);
 		texturaCapim.setIluminosidadeFalsa(true);
+		texturaPoste.setIluminosidadeFalsa(true);
 		//texturaPlanta.setIluminosidadeFalsa(true);
 		
 		//Coloco se a textura é dividida em grids de texturas
@@ -106,7 +109,8 @@ public class Jogo {
 		ObjetoComTextura objetoDragao = new ObjetoComTextura(modeloDragao,texturaDragao);
 		ObjetoComTextura objetoPlanta = new ObjetoComTextura(modeloPlanta,texturaPlanta);
 		ObjetoComTextura objetoCapim = new ObjetoComTextura(modeloCapim,texturaCapim);
-		ObjetoComTextura objetoArvore = new ObjetoComTextura(modeloArvore,texturaArvore); 
+		ObjetoComTextura objetoArvore = new ObjetoComTextura(modeloArvore,texturaArvore);
+		ObjetoComTextura objetoPoste = new ObjetoComTextura(modeloPoste,texturaPoste); 
 		
 		//Faço a transformação dos Objetos e o transformo em Entidades
 		
@@ -133,16 +137,29 @@ public class Jogo {
 			plantio.add(new Entidade(objetoPlanta,aleatorio.nextInt(4),new Vetor3f(x, y, z),0f, 0f, 0f, 1f));
 		}
 		
-		Jogador dragao = new Jogador(objetoDragao,new Vetor3f(20, 0, -50), 0f, 0f, 0f, 1f);
+		Jogador poste = new Jogador(objetoPoste,new Vetor3f(0, terreno1.getAlturaDoTerreno(0, -20), -20), 0f, 0f, 0f, 1f);
+		Jogador poste2 = new Jogador(objetoPoste,new Vetor3f(0, terreno1.getAlturaDoTerreno(0, -100), -100), 0f, 0f, 0f, 1f);
+		
+	
+		//========================CAMERAS=========================//
+		
+		CameraTerceiraPessoa camera = new CameraTerceiraPessoa(poste);
+		//Camera camera = new Camera();
 		
 		
-		//============================CAMERAS==============================//
+		//==========================LUZES=========================//
 		
-		//CameraTerceiraPessoa camera = new CameraTerceiraPessoa(dragao);
-		Camera camera = new Camera();
+		List<Difusa> luzes = new ArrayList<Difusa>();
 		
+		Difusa sol = new Difusa(new Vetor3f(1000000, 400000, 20000),COR_BRANCA_ESCURO);
+		Difusa verde = new Difusa(new Vetor3f(poste.getPosicao().x, poste.getPosicao().y + 14.8f, poste.getPosicao().z),COR_VERDE,new Vetor3f(1f, 0.01f, 0.002f));
+		Difusa vermelha = new Difusa(new Vetor3f(poste2.getPosicao().x, poste2.getPosicao().y + 14.8f, poste2.getPosicao().z),COR_VERMELHA,new Vetor3f(1f, 0.005f, 0.001f));
 		
-		//==============================GUI================================//
+		luzes.add(sol);
+		luzes.add(verde);
+		luzes.add(vermelha);
+		
+		//============================GUI=========================//
 		
 		
 		List<TexturaGUI> guis = new ArrayList<TexturaGUI>();
@@ -167,11 +184,12 @@ public class Jogo {
 			//****************MOVER ENTIDADES****************//
 			
 			camera.mover();
-			dragao.mover(terreno1);
+			poste.mover(terreno1);
+			luzes.get(1).setPosicao(new Vetor3f(poste.getPosicao().x, poste.getPosicao().y + 20f, poste.getPosicao().z));
 			
 			//****************RENDERIZAR ENTIDADES****************//
 			
-			renderizador.renderizar(luz, camera);
+			renderizador.renderizar(luzes, camera);
 			
 			for(Entidade aArvore : floresta){
 				renderizador.processarEntidades(aArvore);
@@ -186,8 +204,9 @@ public class Jogo {
 				renderizador.processarGUI(aGUI);
 			}
 			
-			dragao.aumentarRotacao(0, 2, 0);
-			renderizador.processarEntidades(dragao);
+			//dragao.aumentarRotacao(0, 2, 0);
+			renderizador.processarEntidades(poste);
+			renderizador.processarEntidades(poste2);
 			
 
 			

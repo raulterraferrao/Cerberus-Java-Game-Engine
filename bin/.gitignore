@@ -1,11 +1,5 @@
-/shaders/
-/gui/
-/renderizador/
+/texturas/
 /gerenciadores/
-/entidades/
-/executador/
-/objetos/
-/terrenos/
-/estruturasDeDados/
-/matrizesDeTransformacao/
+/renderizador/
 /glsl/
+/shaders/

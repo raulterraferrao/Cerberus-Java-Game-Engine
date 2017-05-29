@@ -24,7 +24,7 @@ public class RenderizadorGUI {
 
 		this.shaderGUI = shaderGUI;
 		float vertices[] = {-1, 1, -1, -1, 1, 1, 1, -1};
-		quadro = gerenciador.carregarParaVAO(vertices);
+		quadro = gerenciador.carregarParaVAO(vertices, 2);
 		
 	}
 	

@@ -8,15 +8,15 @@ import matrizesDeTransformacao.MatrizDeTransformacao;
 
 public class ShaderGUI extends ProgramaShaderPadrao{
 	
-	private static final String VERTEX_FILE = "src/glsl/vertexShaderGUI.glsl";
-	private static final String FRAGMENT_FILE = "src/glsl/fragmentShaderGUI.glsl";
+	private static final String ARQUIVO_VERTEX = "src/glsl/vertexShaderGUI.glsl";
+	private static final String ARQUIVO_FRAGMENT = "src/glsl/fragmentShaderGUI.glsl";
 	
 	private static final int POSICAO = 0;
 	
 	private int localidade_MatrizDeTransformacao;
 
 	public ShaderGUI() {
-		super(VERTEX_FILE, FRAGMENT_FILE);
+		super(ARQUIVO_VERTEX, ARQUIVO_FRAGMENT);
 	}
 	
 	protected void conectarAtributos() {

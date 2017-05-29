@@ -16,51 +16,60 @@ import objetos.ObjetoComTextura;
 import shaders.ShaderTerreno;
 import shaders.ShaderEntidade;
 import shaders.ShaderGUI;
+import shaders.ShaderSkybox;
 import terrenos.Terreno;
 
 public class Renderizador {
 
-	private static final float VERMELHO = 0.5f;
-	private static final float VERDE = 0.5f;
-	private static final float AZUL = 1;
+	private static final float VERMELHO = 0.9f;
+	private static final float VERDE = 0.9f;
+	private static final float AZUL = 0.9f;
 	private static final float ALPHA = 1;
 	
 	private GerenciadorDeObjetos gerenciadorDeObj = new GerenciadorDeObjetos();
 	private ShaderEntidade shader = new ShaderEntidade();
 	private ShaderTerreno shaderTerreno = new ShaderTerreno();
 	private ShaderGUI shaderGUI = new ShaderGUI();
+	private ShaderSkybox shaderSkybox = new ShaderSkybox();
 	private RenderizadorDeObjetos renderizadorObjeto = new RenderizadorDeObjetos(shader);
 	private RenderizadorDeTerrenos renderizadorTerreno = new RenderizadorDeTerrenos(shaderTerreno);
 	private RenderizadorGUI renderizadorGUI = new RenderizadorGUI(shaderGUI, gerenciadorDeObj);
+	private RenderizadorDeSkybox renderizadorSkybox = new RenderizadorDeSkybox(shaderSkybox, gerenciadorDeObj);
 	
 	private Map<ObjetoComTextura,List<Entidade>> entidades = new HashMap<ObjetoComTextura,List<Entidade>>();
 	private List<Terreno> terrenos = new ArrayList<Terreno>();
 	private List<TexturaGUI> guis = new ArrayList<TexturaGUI>();
 	
-	public void renderizar(Difusa sol, Camera camera){
+
+	public void renderizar(List<Difusa> luzes, Camera camera){
 
 		habilitarCullFace();
 
 		limpar();
 		
 		shader.iniciarPrograma();
-		shader.carregarLuminosidadeDifusa(sol);
+		shader.carregarLuminosidadesDifusa(luzes);
 		shader.carregarMatrizDeVisualizacao(camera);
 		shader.carregarCorDoCeu(VERMELHO, VERDE, AZUL);
 		renderizadorObjeto.renderizar(entidades);
 		shader.fecharPrograma();
 		
 		shaderTerreno.iniciarPrograma();
-		shaderTerreno.carregarLuminosidadeDifusa(sol);
+		shaderTerreno.carregarLuminosidadeDifusa(luzes);
 		shaderTerreno.carregarMatrizDeVisualizacao(camera);
 		shaderTerreno.carregarCorDoCeu(VERMELHO, VERDE, AZUL);
 		renderizadorTerreno.renderizar(terrenos);
 		shaderTerreno.fecharPrograma();
+				
+		shaderSkybox.iniciarPrograma();
+		shaderSkybox.carregarMatrizDeVisualizacao(camera);
+		shaderSkybox.carregarCorDoCeu(VERMELHO, VERDE, AZUL);
+		renderizadorSkybox.renderizar();
+		shaderSkybox.fecharPrograma();
 		
 		shaderGUI.iniciarPrograma();
 		renderizadorGUI.renderizar(guis);
 		shaderGUI.fecharPrograma();
-		
 		
 		guis.clear();
 		terrenos.clear();

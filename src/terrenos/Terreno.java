@@ -151,16 +151,16 @@ public class Terreno {
 		if(z==0){
 			alturaN = getAltura(x, z, imagem);
 		}else{
-			alturaN = getAltura(x, z-1, imagem);
+			alturaN = getAltura(x, z+1, imagem);
 		}
 		
 		if(z>=imagem.getHeight()){
 			alturaS = getAltura(x, z, imagem);
 		}else{
-			alturaS = getAltura(x, z+1, imagem);
+			alturaS = getAltura(x, z-1, imagem);
 		}
 		
-		Vetor3f normal = new Vetor3f(alturaL - alturaO, 2f ,alturaS - alturaN);
+		Vetor3f normal = new Vetor3f(alturaO - alturaL, 2f ,alturaS - alturaN);
 		normal.normalizar();
 		
 		return normal;
