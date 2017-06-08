@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine">
-    <img src="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/res/img/perfil.png" width=72 height=72>
+    <img src="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/img/perfil.png" width=72 height=72>
   </a>
 
   <h3 align="center">Cerberus Engine</h3>
@@ -71,7 +71,7 @@ Leia o [Como começar](http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/como-co
 
 ## Contribuição
 
-- [Raul Terra Ferrão](http://www.inf.ufg.br/~raulferrao)
+[Raul Terra Ferrão](http://www.inf.ufg.br/~raulferrao)
 
 ## Criador
 
