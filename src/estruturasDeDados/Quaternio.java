@@ -5,10 +5,10 @@ package estruturasDeDados;
 // Para saber mais sobre Quaternio visite esse site
 public class Quaternio {
 
-	private float x;
-	private float y;
-	private float z;
-	private float w;
+	public float x;
+	public float y;
+	public float z;
+	public float w;
 	
 	public Quaternio(float x, float y, float z, float w){
 		
@@ -44,10 +44,10 @@ public class Quaternio {
 	
 	public Quaternio multiplicar(Quaternio q){
 		
-		float w_ = w * q.getW() - x * q.getX() - y * q.getY() - z * q.getZ();
-		float x_ = w * q.getX() + x * q.getW() + y * q.getZ() - z * q.getY(); 
-		float y_ = w * q.getY() + y * q.getW() + z * q.getX() - x * q.getZ();
-		float z_ = w * q.getZ() + z * q.getW() + x * q.getY() - y * q.getX(); 
+		float w_ = w * q.w - x * q.x - y * q.y - z * q.z;
+		float x_ = w * q.x + x * q.w + y * q.z - z * q.y; 
+		float y_ = w * q.y + y * q.w + z * q.x - x * q.z;
+		float z_ = w * q.z + z * q.w + x * q.y - y * q.x; 
 	
 		return new Quaternio(x_, y_, z_, w_);
 	}
@@ -62,37 +62,6 @@ public class Quaternio {
 		return new Quaternio(x_, y_, z_, w_);
 	}
 	
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getZ() {
-		return z;
-	}
-
-	public void setZ(float z) {
-		this.z = z;
-	}
-
-	public float getW() {
-		return w;
-	}
-
-	public void setW(float w) {
-		this.w = w;
-	}
 	
 	
 }

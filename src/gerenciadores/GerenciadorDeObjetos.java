@@ -47,13 +47,23 @@ public class GerenciadorDeObjetos {
 		return new Objeto(vaoID, indices.length);
 
 	}
+	
+	public int carregarParaVAO(float[] vertices, float[] coordenadasTextura) {
+
+		int vaoID = criarVAO();
+		carregarVBOParaVAO(POSICAO, 2, vertices);
+		carregarVBOParaVAO(TEXTURA, 2, coordenadasTextura);
+		unbindVAO();
+
+		return vaoID;
+
+	}
 
 	public Objeto carregarParaVAO(float[] vertices, int dimensoes) {
 		int vaoID = criarVAO();
 		carregarVBOParaVAO(POSICAO, dimensoes, vertices);
 		unbindVAO();
 
-		// Divide-se por 2 pelo fato de que repetimos os vertices
 		return new Objeto(vaoID, vertices.length / dimensoes);
 	}
 

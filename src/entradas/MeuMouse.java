@@ -2,8 +2,16 @@ package entradas;
 
 import java.util.ArrayList;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 
+import cameras.Camera;
+import estruturasDeDados.Matriz4f;
+import estruturasDeDados.Quaternio;
 import estruturasDeDados.Vetor2f;
+import estruturasDeDados.Vetor3f;
+import estruturasDeDados.Vetor4f;
+import matrizesDeTransformacao.MatrizDeProjecao;
+import matrizesDeTransformacao.MatrizDeVisualizacao;
 
 public class MeuMouse {
 	
@@ -33,6 +41,59 @@ public class MeuMouse {
 			if (estaPressionado(i))
 				botoesQueForamPressionados.add(i);
 		
+		
+	}
+	
+	public static Vetor3f selecionar(Camera cam){
+		Matriz4f visualizacao = new Matriz4f();
+		Matriz4f projecao = new Matriz4f();
+		
+		visualizacao = MatrizDeVisualizacao.criarMatrizDeVisualizacao(cam);
+		projecao = MatrizDeProjecao.getMatrizDeProjecao();
+		
+		//Viewport (e.g(788,344))
+		float mouseX = Mouse.getX();
+		float mouseY = Mouse.getY();
+		
+		//Normalizada (e.g(-0.3, 0.9)
+		Vetor2f normalizado = normalizar(mouseX, mouseY);
+		
+		//ClipSpace
+		Vetor4f clipSpace = new Vetor4f(normalizado.x, normalizado.y, -1f, 1f);
+		
+		//EyeSpace
+		Vetor4f eyeSpace = projecaoReversa(clipSpace, projecao);
+		
+		//WorldSpace
+		Vetor3f worldSpace = visualizacaoReversa(eyeSpace, visualizacao);
+		
+		//Normalizar pois queremos só a direção
+		worldSpace.normalizar();
+		
+		return worldSpace;
+		
+	}
+	
+	private static Vetor2f normalizar(float mouseX, float mouseY){
+		
+		float x = (mouseX * 2f) / Display.getWidth() -1f;
+		float y = (mouseY * 2f) / Display.getHeight() -1f;
+		
+		
+		return new Vetor2f(x, y);
+	}
+	
+	private static Vetor4f projecaoReversa(Vetor4f clipspace, Matriz4f projecao){
+		Matriz4f inversa = Matriz4f.inversa(projecao, null);
+		Vetor4f eyeSpace = Matriz4f.transformar(inversa, clipspace, null);
+		return new Vetor4f(eyeSpace.x, eyeSpace.y, -1f, 0f);
+		
+	}
+	
+	private static Vetor3f visualizacaoReversa(Vetor4f eyeSpace, Matriz4f visualizacao){
+		Matriz4f inversa = Matriz4f.inversa(visualizacao, null);
+		Vetor4f worldSpace = Matriz4f.transformar(inversa, eyeSpace, null);
+		return new Vetor3f(worldSpace.x, worldSpace.y, worldSpace.z);
 		
 	}
 	

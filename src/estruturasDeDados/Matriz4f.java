@@ -2,6 +2,8 @@ package estruturasDeDados;
 
 import java.nio.FloatBuffer;
 
+import org.lwjgl.util.vector.Matrix4f;
+
 public class Matriz4f {
 
 	public float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33;
@@ -222,4 +224,110 @@ public class Matriz4f {
 		dest.m23 = src.m23 * vec.z;
 		return dest;
 	}
+	
+	public float determinante() {
+		float f =
+			m00
+				* ((m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32)
+					- m13 * m22 * m31
+					- m11 * m23 * m32
+					- m12 * m21 * m33);
+		f -= m01
+			* ((m10 * m22 * m33 + m12 * m23 * m30 + m13 * m20 * m32)
+				- m13 * m22 * m30
+				- m10 * m23 * m32
+				- m12 * m20 * m33);
+		f += m02
+			* ((m10 * m21 * m33 + m11 * m23 * m30 + m13 * m20 * m31)
+				- m13 * m21 * m30
+				- m10 * m23 * m31
+				- m11 * m20 * m33);
+		f -= m03
+			* ((m10 * m21 * m32 + m11 * m22 * m30 + m12 * m20 * m31)
+				- m12 * m21 * m30
+				- m10 * m22 * m31
+				- m11 * m20 * m32);
+		return f;
+	}
+	
+	private static float determinante3x3(float t00, float t01, float t02,
+		     float t10, float t11, float t12,
+		     float t20, float t21, float t22){
+		return   t00 * (t11 * t22 - t12 * t21)
+      + t01 * (t12 * t20 - t10 * t22)
+      + t02 * (t10 * t21 - t11 * t20);
+	}
+	
+	public static Matriz4f inversa(Matriz4f src, Matriz4f dest) {
+		float determinante = src.determinante();
+		if (determinante != 0) {
+			/*
+			 * m00 m01 m02 m03
+			 * m10 m11 m12 m13
+			 * m20 m21 m22 m23
+			 * m30 m31 m32 m33
+			 */
+			if (dest == null)
+				dest = new Matriz4f();
+			float determinante_inv = 1f/determinante;
+
+			// first row
+			float t00 =  determinante3x3(src.m11, src.m12, src.m13, src.m21, src.m22, src.m23, src.m31, src.m32, src.m33);
+			float t01 = -determinante3x3(src.m10, src.m12, src.m13, src.m20, src.m22, src.m23, src.m30, src.m32, src.m33);
+			float t02 =  determinante3x3(src.m10, src.m11, src.m13, src.m20, src.m21, src.m23, src.m30, src.m31, src.m33);
+			float t03 = -determinante3x3(src.m10, src.m11, src.m12, src.m20, src.m21, src.m22, src.m30, src.m31, src.m32);
+			// second row
+			float t10 = -determinante3x3(src.m01, src.m02, src.m03, src.m21, src.m22, src.m23, src.m31, src.m32, src.m33);
+			float t11 =  determinante3x3(src.m00, src.m02, src.m03, src.m20, src.m22, src.m23, src.m30, src.m32, src.m33);
+			float t12 = -determinante3x3(src.m00, src.m01, src.m03, src.m20, src.m21, src.m23, src.m30, src.m31, src.m33);
+			float t13 =  determinante3x3(src.m00, src.m01, src.m02, src.m20, src.m21, src.m22, src.m30, src.m31, src.m32);
+			// third row
+			float t20 =  determinante3x3(src.m01, src.m02, src.m03, src.m11, src.m12, src.m13, src.m31, src.m32, src.m33);
+			float t21 = -determinante3x3(src.m00, src.m02, src.m03, src.m10, src.m12, src.m13, src.m30, src.m32, src.m33);
+			float t22 =  determinante3x3(src.m00, src.m01, src.m03, src.m10, src.m11, src.m13, src.m30, src.m31, src.m33);
+			float t23 = -determinante3x3(src.m00, src.m01, src.m02, src.m10, src.m11, src.m12, src.m30, src.m31, src.m32);
+			// fourth row
+			float t30 = -determinante3x3(src.m01, src.m02, src.m03, src.m11, src.m12, src.m13, src.m21, src.m22, src.m23);
+			float t31 =  determinante3x3(src.m00, src.m02, src.m03, src.m10, src.m12, src.m13, src.m20, src.m22, src.m23);
+			float t32 = -determinante3x3(src.m00, src.m01, src.m03, src.m10, src.m11, src.m13, src.m20, src.m21, src.m23);
+			float t33 =  determinante3x3(src.m00, src.m01, src.m02, src.m10, src.m11, src.m12, src.m20, src.m21, src.m22);
+
+			// transpose and divide by the determinant
+			dest.m00 = t00*determinante_inv;
+			dest.m11 = t11*determinante_inv;
+			dest.m22 = t22*determinante_inv;
+			dest.m33 = t33*determinante_inv;
+			dest.m01 = t10*determinante_inv;
+			dest.m10 = t01*determinante_inv;
+			dest.m20 = t02*determinante_inv;
+			dest.m02 = t20*determinante_inv;
+			dest.m12 = t21*determinante_inv;
+			dest.m21 = t12*determinante_inv;
+			dest.m03 = t30*determinante_inv;
+			dest.m30 = t03*determinante_inv;
+			dest.m13 = t31*determinante_inv;
+			dest.m31 = t13*determinante_inv;
+			dest.m32 = t23*determinante_inv;
+			dest.m23 = t32*determinante_inv;
+			return dest;
+		} else
+			return null;
+	}
+	public static Vetor4f transformar(Matriz4f esquerda, Vetor4f direita, Vetor4f dest) {
+		if (dest == null)
+			dest = new Vetor4f(1,1,1,1);
+
+		float x = esquerda.m00 * direita.x + esquerda.m10 * direita.y + esquerda.m20 * direita.z + esquerda.m30 * direita.w;
+		float y = esquerda.m01 * direita.x + esquerda.m11 * direita.y + esquerda.m21 * direita.z + esquerda.m31 * direita.w;
+		float z = esquerda.m02 * direita.x + esquerda.m12 * direita.y + esquerda.m22 * direita.z + esquerda.m32 * direita.w;
+		float w = esquerda.m03 * direita.x + esquerda.m13 * direita.y + esquerda.m23 * direita.z + esquerda.m33 * direita.w;
+
+		dest.x = x;
+		dest.y = y;
+		dest.z = z;
+		dest.w = w;
+
+		return dest;
+	}
+	
 }

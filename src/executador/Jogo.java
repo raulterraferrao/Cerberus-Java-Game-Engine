@@ -1,8 +1,11 @@
 package executador;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.security.auth.callback.TextOutputCallback;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -11,9 +14,13 @@ import cameras.Camera;
 import cameras.CameraTerceiraPessoa;
 import entidades.Entidade;
 import entidades.Jogador;
+import entradas.MeuMouse;
 import entradas.MeuTeclado;
 import estruturasDeDados.Vetor2f;
 import estruturasDeDados.Vetor3f;
+import fontMeshCreator.FontType;
+import fontMeshCreator.GUIText;
+import fontRendering.TextMaster;
 import gerenciadores.GerenciadorDeJanela;
 import gerenciadores.GerenciadorDeObjetos;
 import gui.TexturaGUI;
@@ -44,7 +51,12 @@ public class Jogo {
 		Renderizador renderizador = new Renderizador();
 		
 		GerenciadorDeObjetos gerenciadorDeObj = new GerenciadorDeObjetos();
-	
+		
+		TextMaster.init(gerenciadorDeObj);
+		
+		FontType font = new FontType(gerenciadorDeObj.carregarTextura("barrio"),new File("img/barrio.fnt"));
+		GUIText texto = new GUIText("solução", 1, font , new Vetor2f(0,0), 1f, true);
+		
 
 		//=========================OBJETOS========================//
 		
@@ -178,6 +190,7 @@ public class Jogo {
 	
 		while(!Display.isCloseRequested() && !MeuTeclado.foiPressionada(Keyboard.KEY_ESCAPE)){
 			if(MeuTeclado.foiPressionada(Keyboard.KEY_F2)){
+				texto.remove();
 				pausar();
 			}
 												
@@ -188,6 +201,8 @@ public class Jogo {
 			luzes.get(1).setPosicao(new Vetor3f(poste.getPosicao().x, poste.getPosicao().y + 20f, poste.getPosicao().z));
 			
 			//****************RENDERIZAR ENTIDADES****************//
+			
+			//System.out.println(MeuMouse.selecionar(camera));
 			
 			renderizador.renderizar(luzes, camera);
 			
@@ -216,7 +231,7 @@ public class Jogo {
 			//renderizador.processarTerrenos(terreno3);
 			//renderizador.processarTerrenos(terreno4);
 			
-			
+			TextMaster.render();
 			//****************ATUALIZAR DISPLAY****************//
 			
 			GerenciadorDeJanela.atualizarDisplay();
