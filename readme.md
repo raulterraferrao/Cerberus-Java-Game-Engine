@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine">
-    <img src="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/res/img/cerberus.png" width=72 height=72>
+    <img src="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/res/img/perfil.png" width=72 height=72>
   </a>
 
   <h3 align="center">Cerberus Engine</h3>
@@ -24,7 +24,6 @@
 - [Bugs e Requisições](#bugs-e-requisicões)
 - [Documentação](#documentacao)
 - [Contribuição](#contribuicao)
-- [Versionamento](#versionamento)
 - [Criador](#criador)
 - [Licença e Direitos Autorais](#licenca-e-direitos-autorais)
 
@@ -33,15 +32,34 @@ Leia o [Como começar](http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/como-co
 
 ## O que foi incluído
 
-- Isto
+- Importação de objetos de programas de modelagem( E.g Blender) de extensão .obj.
+- Transformação (Translação, Rotação e Escala) de objetos.
+- Texturas.
+- Skybox.
+- Gravidade.
+- Criação de Terrenos utilizando height maps para obter diferentes nivelações.
+- Multi-Texturing para usar em terrenos.
+- Iluminação Difusa, Especular com atenuação.
+- Fog.
+- Camera 3ª pessoa.
+- MipMapping.
+- Entrada de Mouse e Teclado
+- Interface gráfica do usuário ou Graphical User Interface (GUI) 
+- Dia / Noite
+
+
 
 ## Em Desenvolvimento
 
-- Fontes
+- Texto e fontes.
+
 
 ## O que será incluído
 
-- Aquilo
+- NormalMapping
+- Particulas
+- Sombra
+- Água
 
 ## Bugs e Requisições
 
@@ -53,7 +71,7 @@ Leia o [Como começar](http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/como-co
 
 ## Contribuição
 
-- @raulterraferrao
+- [Raul Terra Ferrão](http://www.inf.ufg.br/~raulferrao)
 
 ## Criador
 
