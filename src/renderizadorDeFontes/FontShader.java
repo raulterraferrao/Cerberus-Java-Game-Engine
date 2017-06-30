@@ -1,4 +1,4 @@
-package fontRendering;
+package renderizadorDeFontes;
 
 
 import estruturasDeDados.Vetor2f;

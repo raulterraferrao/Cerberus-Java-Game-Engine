@@ -1,4 +1,4 @@
-package fontRendering;
+package renderizadorDeFontes;
 
 import java.util.List;
 import java.util.Map;
@@ -8,8 +8,8 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import fontMeshCreator.FontType;
-import fontMeshCreator.GUIText;
+import gerenciadorDeFontes.FontType;
+import gerenciadorDeFontes.GUIText;
 
 public class FontRenderer {
 

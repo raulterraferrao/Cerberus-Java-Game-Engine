@@ -1,72 +1,72 @@
-package gui.texto;
+package gerenciadorDeFontes;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextMeshCreator {
+public class Malha {
 
 	protected static final double LINE_HEIGHT = 0.03f;
 	protected static final int SPACE_ASCII = 32;
 
-	private MetaFile metaData;
+	private CarregarFonte metaData;
 
-	protected TextMeshCreator(File metaFile) {
-		metaData = new MetaFile(metaFile);
+	protected Malha(File metaFile) {
+		metaData = new CarregarFonte(metaFile);
 	}
 
-	protected TextMeshData createTextMesh(GUIText text) {
-		List<Line> lines = createStructure(text);
+	protected TextMeshData criarMalha(GUIText text) {
+		List<Linha> lines = createStructure(text);
 		TextMeshData data = createQuadVertices(text, lines);
 		return data;
 	}
 
-	private List<Line> createStructure(GUIText text) {
+	private List<Linha> createStructure(GUIText text) {
 		char[] chars = text.getTextString().toCharArray();
-		List<Line> lines = new ArrayList<Line>();
-		Line currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
-		Word currentWord = new Word(text.getFontSize());
+		List<Linha> lines = new ArrayList<Linha>();
+		Linha currentLine = new Linha(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
+		Palavra currentWord = new Palavra(text.getFontSize());
 		for (char c : chars) {
 			int ascii = (int) c;
 			if (ascii == SPACE_ASCII) {
-				boolean added = currentLine.attemptToAddWord(currentWord);
+				boolean added = currentLine.podeAdicionarPalavra(currentWord);
 				if (!added) {
 					lines.add(currentLine);
-					currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
-					currentLine.attemptToAddWord(currentWord);
+					currentLine = new Linha(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
+					currentLine.podeAdicionarPalavra(currentWord);
 				}
-				currentWord = new Word(text.getFontSize());
+				currentWord = new Palavra(text.getFontSize());
 				continue;
 			}
-			Character character = metaData.getCharacter(ascii);
-			currentWord.addCharacter(character);
+			Letra character = metaData.getCharacter(ascii);
+			currentWord.adicionarLetra(character);
 		}
 		completeStructure(lines, currentLine, currentWord, text);
 		return lines;
 	}
 
-	private void completeStructure(List<Line> lines, Line currentLine, Word currentWord, GUIText text) {
-		boolean added = currentLine.attemptToAddWord(currentWord);
+	private void completeStructure(List<Linha> lines, Linha currentLine, Palavra currentWord, GUIText text) {
+		boolean added = currentLine.podeAdicionarPalavra(currentWord);
 		if (!added) {
 			lines.add(currentLine);
-			currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
-			currentLine.attemptToAddWord(currentWord);
+			currentLine = new Linha(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
+			currentLine.podeAdicionarPalavra(currentWord);
 		}
 		lines.add(currentLine);
 	}
 
-	private TextMeshData createQuadVertices(GUIText text, List<Line> lines) {
+	private TextMeshData createQuadVertices(GUIText text, List<Linha> lines) {
 		text.setNumberOfLines(lines.size());
 		double curserX = 0f;
 		double curserY = 0f;
 		List<Float> vertices = new ArrayList<Float>();
 		List<Float> textureCoords = new ArrayList<Float>();
-		for (Line line : lines) {
+		for (Linha line : lines) {
 			if (text.isCentered()) {
-				curserX = (line.getMaxLength() - line.getLineLength()) / 2;
+				curserX = (line.getTamanhoLinhaMaximo() - line.getLineLength()) / 2;
 			}
-			for (Word word : line.getWords()) {
-				for (Character letter : word.getCharacters()) {
+			for (Palavra word : line.getWords()) {
+				for (Letra letter : word.getLetras()) {
 					addVerticesForCharacter(curserX, curserY, letter, text.getFontSize(), vertices);
 					addTexCoords(textureCoords, letter.getxTextureCoord(), letter.getyTextureCoord(),
 							letter.getXMaxTextureCoord(), letter.getYMaxTextureCoord());
@@ -80,7 +80,7 @@ public class TextMeshCreator {
 		return new TextMeshData(listToArray(vertices), listToArray(textureCoords));
 	}
 
-	private void addVerticesForCharacter(double curserX, double curserY, Character character, double fontSize,
+	private void addVerticesForCharacter(double curserX, double curserY, Letra character, double fontSize,
 			List<Float> vertices) {
 		double x = curserX + (character.getxOffset() * fontSize);
 		double y = curserY + (character.getyOffset() * fontSize);
@@ -96,29 +96,40 @@ public class TextMeshCreator {
 	private static void addVertices(List<Float> vertices, double x, double y, double maxX, double maxY) {
 		vertices.add((float) x);
 		vertices.add((float) y);
+		
 		vertices.add((float) x);
 		vertices.add((float) maxY);
+		
 		vertices.add((float) maxX);
 		vertices.add((float) maxY);
+		
 		vertices.add((float) maxX);
 		vertices.add((float) maxY);
+		
 		vertices.add((float) maxX);
 		vertices.add((float) y);
+		
 		vertices.add((float) x);
 		vertices.add((float) y);
 	}
 
 	private static void addTexCoords(List<Float> texCoords, double x, double y, double maxX, double maxY) {
+		
 		texCoords.add((float) x);
 		texCoords.add((float) y);
+		
 		texCoords.add((float) x);
 		texCoords.add((float) maxY);
+		
 		texCoords.add((float) maxX);
 		texCoords.add((float) maxY);
+		
 		texCoords.add((float) maxX);
 		texCoords.add((float) maxY);
+		
 		texCoords.add((float) maxX);
 		texCoords.add((float) y);
+		
 		texCoords.add((float) x);
 		texCoords.add((float) y);
 	}

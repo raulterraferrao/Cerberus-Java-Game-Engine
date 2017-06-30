@@ -1,10 +1,5 @@
-package fontMeshCreator;
+package gerenciadorDeFontes;
 
-/**
- * Stores the vertex data for all the quads on which a text will be rendered.
- * @author Karl
- *
- */
 public class TextMeshData {
 	
 	private float[] vertexPositions;
