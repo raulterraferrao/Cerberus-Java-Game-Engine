@@ -28,7 +28,7 @@
 - [Licença e Direitos Autorais](#licenca-e-direitos-autorais)
 
 ## Como utilizar
-Leia o [Como começar](http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/como-comecar) para rodar o código fonte em sua IDE de escolha.
+Leia o [Como começar](http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/como-comecar.html) para rodar o código fonte em sua IDE de escolha.
 
 ## O que foi incluído
 
