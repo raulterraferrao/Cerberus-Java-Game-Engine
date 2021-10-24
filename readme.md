@@ -5,10 +5,10 @@
     <img src="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine/img/perfil.png" width=72 height=72>
   </a>
 
-  <h3 align="center">Cerberus Engine</h3>
+  <h3 align="center">Cerberus Engine 3D</h3>
 
   <p align="center">
-    Fácil, prático, simples. Conheça a microengine Cerberus, que está em desenvolvimento usando a linguagem Java.
+    Fácil, prático, simples. Conheça a microengine Cerberus 3D, que está em desenvolvimento utilizando a linguagem Java.
     <br>
     <a href="http://www.inf.ufg.br/~raulferrao/Cerberus-Engine"><strong>Visite a Cerberus Engine &raquo;</strong></a>
   </p>
